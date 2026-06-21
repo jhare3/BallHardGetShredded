@@ -1,0 +1,92 @@
+{
+  "goals": {
+    "body": {
+      "target_weight_lbs": 160,
+      "current_weight_lbs": 170,
+      "target_body_fat_pct": 15,
+      "aesthetic_and_posture": ["6-pack abs", "No hunch back", "Shredded upper body"],
+      "structural_foundation": [
+        "Bulletproof ankles, Achilles tendon, and calves",
+        "Strong foundation throughout toes, feet, legs, and core"
+      ]
+    },
+    "basketball": [
+      "Become a starting PG-level ballhandler",
+      "Shoot 40% from 3",
+      "Dynamic contested off the catch and dribble shooter"
+    ]
+  },
+  "daily_non_negotiables": [
+    "Minimum of 40 minutes of exercise",
+    "Minimum of 15 minutes outside (Get sunlight)",
+    "Minimum of 5 minutes meditation (Headspace)",
+    "Minimum of 10 minutes Kegel/core routine (The Coach App)"
+  ],
+  "dietary_options": {
+    "protein": ["Chicken", "Beef", "Shrimp", "Tofu", "Peanut Butter", "Mixed Nuts", "Protein Bars", "Protein Powder"],
+    "fiber": ["Watermelon", "Banana", "Sautéed spinach", "Sweet potatoes", "Nuts", "Yerba Prima Psyllium"],
+    "carbs": ["Sweet potato", "Rice", "Broccoli", "Spinach", "Frozen Fruit"],
+    "supplements_and_hydration": ["Magnesium", "Creatine", "B12", "Electrolytes (Body Armour)", "Water with Lemon & Sea salt"]
+  },
+  "weekly_schedule": {
+    "Monday": {
+      "location": "The Edge SB (Weights)",
+      "focus": "Upper Body Strength",
+      "time_blocks": {
+        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
+        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
+        "after_work_1730_2000": ["Full Upper Body Workout (Chest, Back, Shoulders, Biceps, Triceps, Traps)", "Dinner"]
+      }
+    },
+    "Tuesday": {
+      "location": "The Edge Essex",
+      "focus": "Basketball Workout & Legs",
+      "time_blocks": {
+        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
+        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
+        "after_work_1730_2000": ["Basketball workout", "Legs (Quads, Hamstrings, Calves, Tibialis, Feet)", "Dinner"]
+      }
+    },
+    "Wednesday": {
+      "location": "Home Workout",
+      "focus": "Home Maintenance & Light Strength",
+      "time_blocks": {
+        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
+        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
+        "after_work_1730_2000": ["Home workout (Body weight, Bands, Yoga, Plyometrics, Light strength)", "Dinner"]
+      }
+    },
+    "Thursday": {
+      "location": "Home / Running Path",
+      "focus": "Cardio Run & Full Body Workout",
+      "time_blocks": {
+        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
+        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
+        "after_work_1730_2000": ["Run (Cardio)", "Full Body Workout", "Dinner"]
+      }
+    },
+    "Friday": {
+      "location": "The Edge SB",
+      "focus": "Full Body Workout",
+      "time_blocks": {
+        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
+        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
+        "after_work_1730_2000": ["Full Body Workout", "Dinner"]
+      }
+    },
+    "Saturday": {
+      "location": "The Edge Essex",
+      "focus": "Game Prep & Shooting Workout",
+      "time_blocks": {
+        "daytime": ["Full workout (Prep and maintenance for game day)", "Shooting workout at the Edge Essex (Shooting, Ball handling, Skill moves, Jumping)"]
+      }
+    },
+    "Sunday": {
+      "location": "BHS (Burlington High School)",
+      "focus": "Men's League Game Day",
+      "time_blocks": {
+        "game_time": ["Men's League Basketball Game"]
+      }
+    }
+  }
+}
