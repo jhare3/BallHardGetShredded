@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "remix": "^2.17.5"
+  }
+
+
+"scripts": {
+  "build": "remix vite:build"
+}
+}
