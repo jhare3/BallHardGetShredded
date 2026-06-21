@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// Hardcoded core Fitness Constitution static fallback asset embedded to guarantee 
-// seamless cross-environment compilation and continuous running without any resolution errors.
 const constitutionData = {
   "goals": {
     "body": {
@@ -33,154 +31,88 @@ const constitutionData = {
     "supplements_and_hydration": ["Magnesium", "Creatine", "B12", "Electrolytes (Body Armour)", "Water with Lemon & Sea salt"]
   },
   "weekly_schedule": {
-    "Monday": {
-      "location": "The Edge SB (Weights)",
-      "focus": "Upper Body Strength",
-      "time_blocks": {
-        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
-        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
-        "after_work_1730_2000": ["Full Upper Body Workout (Chest, Back, Shoulders, Biceps, Triceps, Traps)", "Dinner"]
-      }
-    },
-    "Tuesday": {
-      "location": "The Edge Essex",
-      "focus": "Basketball Workout & Legs",
-      "time_blocks": {
-        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
-        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
-        "after_work_1730_2000": ["Basketball workout (Shooting, Ball handling, Skill moves, Jumping)", "Legs (Quads, Hamstrings, Calves, Tibialis, Feet)", "Dinner"]
-      }
-    },
-    "Wednesday": {
-      "location": "Home Workout",
-      "focus": "Home Maintenance & Light Strength",
-      "time_blocks": {
-        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
-        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
-        "after_work_1730_2000": ["Home workout (Body weight, Bands, Yoga, Plyometrics, Light strength)", "Dinner"]
-      }
-    },
-    "Thursday": {
-      "location": "Home / Running Path",
-      "focus": "Cardio Run & Full Body Workout",
-      "time_blocks": {
-        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
-        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
-        "after_work_1730_2000": ["Run (Cardio)", "Full Body Workout", "Dinner"]
-      }
-    },
-    "Friday": {
-      "location": "The Edge SB",
-      "focus": "Full Body Workout",
-      "time_blocks": {
-        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
-        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
-        "after_work_1730_2000": ["Full Body Workout", "Dinner"]
-      }
-    },
-    "Saturday": {
-      "location": "The Edge Essex",
-      "focus": "Game Prep & Shooting Workout",
-      "time_blocks": {
-        "daytime": ["Full workout (Prep and maintenance for game day)", "Shooting workout at the Edge Essex (Shooting, Ball handling, Skill moves, Jumping)"]
-      }
-    },
-    "Sunday": {
-      "location": "BHS (Burlington High School)",
-      "focus": "Men's League Game Day",
-      "time_blocks": {
-        "game_time": ["Men's League Basketball Game"]
-      }
-    }
+    "Monday": { "location": "The Edge SB (Weights)", "focus": "Upper Body Strength", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Full Upper Body Workout (Chest, Back, Shoulders, Biceps, Triceps, Traps)", "Dinner"] } },
+    "Tuesday": { "location": "The Edge Essex", "focus": "Basketball & Legs", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Basketball workout (Shooting, Ball handling, Skill moves, Jumping)", "Legs (Quads, Hamstrings, Calves, Tibialis, Feet)", "Dinner"] } },
+    "Wednesday": { "location": "Home Workout", "focus": "Home Maintenance", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Home workout (Body weight, Bands, Yoga, Plyometrics, Light strength)", "Dinner"] } },
+    "Thursday": { "location": "Home / Running Path", "focus": "Cardio Run", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Run (Cardio)", "Full Body Workout", "Dinner"] } },
+    "Friday": { "location": "The Edge SB", "focus": "Full Body Strength", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Full Body Workout", "Dinner"] } },
+    "Saturday": { "location": "The Edge Essex", "focus": "Game Prep & Shooting", "time_blocks": { "daytime": ["Full workout (Prep and maintenance for game day)", "Shooting workout at the Edge Essex (Shooting, Ball handling, Skill moves, Jumping)"] } },
+    "Sunday": { "location": "BHS (Burlington High School)", "focus": "Men's League Game", "time_blocks": { "game_time": ["Men's League Basketball Game"] } }
   }
 };
 
 const DAYS_OF_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const DAY_ABBREVS = { Sunday: "Sun", Monday: "Mon", Tuesday: "Tue", Wednesday: "Wed", Thursday: "Thu", Friday: "Fri", Saturday: "Sat" };
+
+const nutritionPresets = [
+  { name: "Grilled Chicken (150g)", protein: 40, calories: 220, category: "protein", emoji: "🍗" },
+  { name: "Sirloin Beef (150g)", protein: 35, calories: 290, category: "protein", emoji: "🥩" },
+  { name: "Garlic Shrimp", protein: 28, calories: 180, category: "protein", emoji: "🍤" },
+  { name: "Protein Shake", protein: 30, calories: 210, category: "protein", emoji: "🥛" },
+  { name: "Peanut Butter (2 tbsp)", protein: 8, calories: 190, category: "protein", emoji: "🥜" },
+  { name: "Sweet Potato (Baked)", protein: 2, calories: 160, category: "carbs", emoji: "🍠" },
+  { name: "Bowl of Rice", protein: 4, calories: 200, category: "carbs", emoji: "🍚" },
+  { name: "Broccoli & Spinach", protein: 3, calories: 60, category: "fiber", emoji: "🥦" },
+  { name: "Watermelon Wedge", protein: 1, calories: 85, category: "fiber", emoji: "🍉" },
+  { name: "Banana", protein: 1, calories: 105, category: "fiber", emoji: "🍌" },
+  { name: "Psyllium Shake", protein: 0, calories: 30, category: "fiber", emoji: "🌾" },
+  { name: "Body Armour Electrolyte", protein: 0, calories: 90, category: "supplements", emoji: "⚡" },
+];
+
+const TABS = [
+  { id: "today", label: "Today", emoji: "🌿" },
+  { id: "food", label: "Fuel", emoji: "🍃" },
+  { id: "timer", label: "Timer", emoji: "⏱" },
+  { id: "schedule", label: "Week", emoji: "📅" },
+  { id: "goals", label: "Goals", emoji: "🏀" },
+];
 
 export default function App() {
-  // 1. Core State
+  const [activeTab, setActiveTab] = useState("today");
   const [selectedDay, setSelectedDay] = useState("");
   const [todayDayString, setTodayDayString] = useState("");
   const [checklistStates, setChecklistStates] = useState({});
-  const [loggedWeight, setLoggedWeight] = useState(170); // Default starting weight
+  const [loggedWeight, setLoggedWeight] = useState(170);
   const [dailyProtein, setDailyProtein] = useState(0);
   const [caloriesLogged, setCaloriesLogged] = useState(0);
-  const [waterLoggedOz, setWaterLoggedOz] = useState(0); // Gal target: 128 oz
   const [customProteinInput, setCustomProteinInput] = useState("");
   const [customCaloriesInput, setCustomCaloriesInput] = useState("");
   const [pushupCount, setPushupCount] = useState(0);
-  
-  // Custom Food bank logs
   const [customFoodsLogged, setCustomFoodsLogged] = useState([]);
-
-  // Workout Timer States
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(0);
   const timerIntervalRef = useRef(null);
 
-  // Long-Term Constitution Goals State (Saved Globally)
-  const [completedLongTermGoals, setCompletedLongTermGoals] = useState({});
-
-  // Initialize day selection on mount
   useEffect(() => {
     const today = new Date();
     const dayName = DAYS_OF_WEEK[today.getDay()];
     setTodayDayString(dayName);
-    setSelectedDay(dayName); // Default to current day
+    setSelectedDay(dayName);
   }, []);
 
-  // Load and persist states with LocalStorage
   useEffect(() => {
     if (!selectedDay) return;
-    
     const keyPrefix = `bhgs_${selectedDay}_`;
-    
-    // Load checklist states
     const savedChecklist = localStorage.getItem(`${keyPrefix}checklist`);
-    if (savedChecklist) {
-      setChecklistStates(JSON.parse(savedChecklist));
-    } else {
-      setChecklistStates({});
-    }
-
-    // Load protein, calories & water
+    setChecklistStates(savedChecklist ? JSON.parse(savedChecklist) : {});
     const savedProtein = localStorage.getItem(`${keyPrefix}protein`);
     setDailyProtein(savedProtein ? parseInt(savedProtein, 10) : 0);
-
     const savedCalories = localStorage.getItem(`${keyPrefix}calories`);
     setCaloriesLogged(savedCalories ? parseInt(savedCalories, 10) : 0);
-
-    const savedWater = localStorage.getItem(`${keyPrefix}water`);
-    setWaterLoggedOz(savedWater ? parseInt(savedWater, 10) : 0);
-
-    // Load pushups
     const savedPushups = localStorage.getItem(`${keyPrefix}pushups`);
     setPushupCount(savedPushups ? parseInt(savedPushups, 10) : 0);
-
-    // Load custom foods eaten
     const savedFoods = localStorage.getItem(`${keyPrefix}foods`);
     setCustomFoodsLogged(savedFoods ? JSON.parse(savedFoods) : []);
-
-    // Load active timer state
     const savedTimer = localStorage.getItem(`${keyPrefix}timer`);
     setTimerSeconds(savedTimer ? parseInt(savedTimer, 10) : 0);
   }, [selectedDay]);
 
-  // Load global metrics
   useEffect(() => {
     const storedWeight = localStorage.getItem('bhgs_global_weight');
-    if (storedWeight) {
-      setLoggedWeight(parseFloat(storedWeight));
-    }
-
-    const storedLongTermGoals = localStorage.getItem('bhgs_longterm_goals');
-    if (storedLongTermGoals) {
-      setCompletedLongTermGoals(JSON.parse(storedLongTermGoals));
-    }
+    if (storedWeight) setLoggedWeight(parseFloat(storedWeight));
   }, []);
 
-  // Save checklist helper
-  const saveStateToLocalStorage = (key, value) => {
+  const save = (key, value) => {
     if (!selectedDay) return;
     localStorage.setItem(`bhgs_${selectedDay}_${key}`, JSON.stringify(value));
   };
@@ -188,80 +120,56 @@ export default function App() {
   const handleCheckChange = (itemKey, isChecked) => {
     const updated = { ...checklistStates, [itemKey]: isChecked };
     setChecklistStates(updated);
-    saveStateToLocalStorage('checklist', updated);
+    save('checklist', updated);
   };
 
   const handleProteinAdd = (amount) => {
-    const newProtein = Math.max(0, dailyProtein + amount);
-    setDailyProtein(newProtein);
-    if (selectedDay) {
-      localStorage.setItem(`bhgs_${selectedDay}_protein`, newProtein);
-    }
+    const newVal = Math.max(0, dailyProtein + amount);
+    setDailyProtein(newVal);
+    if (selectedDay) localStorage.setItem(`bhgs_${selectedDay}_protein`, newVal);
   };
 
   const handleCaloriesAdd = (amount) => {
-    const newCal = Math.max(0, caloriesLogged + amount);
-    setCaloriesLogged(newCal);
-    if (selectedDay) {
-      localStorage.setItem(`bhgs_${selectedDay}_calories`, newCal);
-    }
-  };
-
-  const handleWaterAdd = (amountOz) => {
-    const newWater = Math.max(0, waterLoggedOz + amountOz);
-    setWaterLoggedOz(newWater);
-    if (selectedDay) {
-      localStorage.setItem(`bhgs_${selectedDay}_water`, newWater);
-    }
+    const newVal = Math.max(0, caloriesLogged + amount);
+    setCaloriesLogged(newVal);
+    if (selectedDay) localStorage.setItem(`bhgs_${selectedDay}_calories`, newVal);
   };
 
   const handlePushupIncrement = (amount) => {
-    const nextVal = Math.max(0, pushupCount + amount);
-    setPushupCount(nextVal);
-    if (selectedDay) {
-      localStorage.setItem(`bhgs_${selectedDay}_pushups`, nextVal);
-    }
+    const next = Math.max(0, pushupCount + amount);
+    setPushupCount(next);
+    if (selectedDay) localStorage.setItem(`bhgs_${selectedDay}_pushups`, next);
   };
 
-  // Workout stopwatch actions
-  const startWorkoutTimer = () => {
+  const startTimer = () => {
     if (isTimerRunning) return;
     setIsTimerRunning(true);
     timerIntervalRef.current = setInterval(() => {
-      setTimerSeconds((prev) => {
+      setTimerSeconds(prev => {
         const next = prev + 1;
-        if (selectedDay) {
-          localStorage.setItem(`bhgs_${selectedDay}_timer`, next);
-        }
+        if (selectedDay) localStorage.setItem(`bhgs_${selectedDay}_timer`, next);
         return next;
       });
     }, 1000);
   };
 
-  const stopWorkoutTimer = () => {
+  const stopTimer = () => {
     clearInterval(timerIntervalRef.current);
     setIsTimerRunning(false);
   };
 
-  const resetWorkoutTimer = () => {
+  const resetTimer = () => {
     clearInterval(timerIntervalRef.current);
     setIsTimerRunning(false);
     setTimerSeconds(0);
-    if (selectedDay) {
-      localStorage.setItem(`bhgs_${selectedDay}_timer`, 0);
-    }
+    if (selectedDay) localStorage.setItem(`bhgs_${selectedDay}_timer`, 0);
   };
 
-  // Format stopwatch helper
   const formatTime = (totalSeconds) => {
     const hrs = Math.floor(totalSeconds / 3600);
     const mins = Math.floor((totalSeconds % 3600) / 60);
     const secs = totalSeconds % 60;
-    return [
-      hrs > 0 ? String(hrs).padStart(2, '0') : null,
-      String(mins).padStart(2, '0'),
-      String(secs).padStart(2, '0')
-    ].filter(Boolean).join(':');
+    return [hrs > 0 ? String(hrs).padStart(2, '0') : null, String(mins).padStart(2, '0'), String(secs).padStart(2, '0')].filter(Boolean).join(':');
   };
 
   const handleWeightChange = (newWeight) => {
@@ -270,846 +178,490 @@ export default function App() {
     localStorage.setItem('bhgs_global_weight', rounded);
   };
 
-  const toggleLongTermGoal = (goalText) => {
-    const updated = { ...completedLongTermGoals, [goalText]: !completedLongTermGoals[goalText] };
-    setCompletedLongTermGoals(updated);
-    localStorage.setItem('bhgs_longterm_goals', JSON.stringify(updated));
-  };
-
-  // Fast reset for the day's dashboard
-  const handleResetDay = () => {
-    if (confirm(`Reset all logs, metrics, and checklists for ${selectedDay}?`)) {
-      setChecklistStates({});
-      setDailyProtein(0);
-      setCaloriesLogged(0);
-      setWaterLoggedOz(0);
-      setPushupCount(0);
-      setCustomFoodsLogged([]);
-      setTimerSeconds(0);
-      setIsTimerRunning(false);
-      clearInterval(timerIntervalRef.current);
-
-      const prefix = `bhgs_${selectedDay}_`;
-      localStorage.removeItem(`${prefix}checklist`);
-      localStorage.removeItem(`${prefix}protein`);
-      localStorage.removeItem(`${prefix}calories`);
-      localStorage.removeItem(`${prefix}water`);
-      localStorage.removeItem(`${prefix}pushups`);
-      localStorage.removeItem(`${prefix}foods`);
-      localStorage.removeItem(`${prefix}timer`);
-    }
-  };
-
-  // Fetch the schedule items for selected day
-  const activeDaySchedule = constitutionData.weekly_schedule[selectedDay] || {
-    location: "Rest Day",
-    focus: "Recovery",
-    time_blocks: { daytime: ["Active Stretching & Recovery Walk"] }
-  };
-
-  // Quick food options based directly on your Constitution
-  const nutritionPresets = [
-    { name: "Grilled Chicken Breast (150g)", protein: 40, calories: 220, category: "protein" },
-    { name: "Sirloin Beef (150g)", protein: 35, calories: 290, category: "protein" },
-    { name: "Garlic Butter Shrimp", protein: 28, calories: 180, category: "protein" },
-    { name: "Premium Protein Shake", protein: 30, calories: 210, category: "protein" },
-    { name: "Peanut Butter (2 tbsp)", protein: 8, calories: 190, category: "protein" },
-    { name: "Sweet Potato (Baked)", protein: 2, calories: 160, category: "carbs" },
-    { name: "Bowl of White Rice", protein: 4, calories: 200, category: "carbs" },
-    { name: "Broccoli & Spinach Bowl", protein: 3, calories: 60, category: "fiber" },
-    { name: "Watermelon Wedge", protein: 1, calories: 85, category: "fiber" },
-    { name: "Banana", protein: 1, calories: 105, category: "fiber" },
-    { name: "Yerba Prima Psyllium Shake", protein: 0, calories: 30, category: "fiber" },
-    { name: "Body Armour Electrolyte Drink", protein: 0, calories: 90, category: "supplements_and_hydration" }
-  ];
-
   const handleEatFoodPreset = (food) => {
     handleProteinAdd(food.protein);
     handleCaloriesAdd(food.calories);
-    
-    const newFoodEntry = {
-      id: Date.now(),
-      name: food.name,
-      protein: food.protein,
-      calories: food.calories,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-    
-    const updatedFoods = [newFoodEntry, ...customFoodsLogged];
-    setCustomFoodsLogged(updatedFoods);
-    if (selectedDay) {
-      localStorage.setItem(`bhgs_${selectedDay}_foods`, JSON.stringify(updatedFoods));
-    }
+    const entry = { id: Date.now(), name: food.name, protein: food.protein, calories: food.calories, emoji: food.emoji, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
+    const updated = [entry, ...customFoodsLogged];
+    setCustomFoodsLogged(updated);
+    if (selectedDay) localStorage.setItem(`bhgs_${selectedDay}_foods`, JSON.stringify(updated));
   };
 
-  const handleCustomFoodAdd = (e) => {
-    e.preventDefault();
+  const handleCustomFoodAdd = () => {
     const pVal = parseInt(customProteinInput, 10) || 0;
     const cVal = parseInt(customCaloriesInput, 10) || 0;
-    if (!customProteinInput && !customCaloriesInput) return;
-
-    const newFoodEntry = {
-      id: Date.now(),
-      name: `Custom Logged Intake`,
-      protein: pVal,
-      calories: cVal,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-
+    if (!pVal && !cVal) return;
+    const entry = { id: Date.now(), name: "Custom Entry", protein: pVal, calories: cVal, emoji: "🍽", time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
     handleProteinAdd(pVal);
     handleCaloriesAdd(cVal);
-
-    const updatedFoods = [newFoodEntry, ...customFoodsLogged];
-    setCustomFoodsLogged(updatedFoods);
-    if (selectedDay) {
-      localStorage.setItem(`bhgs_${selectedDay}_foods`, JSON.stringify(updatedFoods));
-    }
-
+    const updated = [entry, ...customFoodsLogged];
+    setCustomFoodsLogged(updated);
+    if (selectedDay) localStorage.setItem(`bhgs_${selectedDay}_foods`, JSON.stringify(updated));
     setCustomProteinInput("");
     setCustomCaloriesInput("");
   };
 
-  const deleteLoggedFood = (foodId, pAmount, cAmount) => {
+  const deleteLoggedFood = (foodId, p, c) => {
     const updated = customFoodsLogged.filter(f => f.id !== foodId);
     setCustomFoodsLogged(updated);
-    if (selectedDay) {
-      localStorage.setItem(`bhgs_${selectedDay}_foods`, JSON.stringify(updated));
-    }
-    handleProteinAdd(-pAmount);
-    handleCaloriesAdd(-cAmount);
+    if (selectedDay) localStorage.setItem(`bhgs_${selectedDay}_foods`, JSON.stringify(updated));
+    handleProteinAdd(-p);
+    handleCaloriesAdd(-c);
   };
 
-  const getCommuteDetails = () => {
-    const loc = activeDaySchedule.location || "";
-    if (loc.includes("The Edge SB")) {
-      return { text: "The Edge Burlington Gym (SB)", commute: "7-minute commute from home", icon: "🚗" };
+  const handleResetDay = () => {
+    if (confirm(`Reset all logs for ${selectedDay}?`)) {
+      setChecklistStates({}); setDailyProtein(0); setCaloriesLogged(0); setPushupCount(0);
+      setCustomFoodsLogged([]); setTimerSeconds(0); setIsTimerRunning(false);
+      clearInterval(timerIntervalRef.current);
+      const prefix = `bhgs_${selectedDay}_`;
+      ['checklist','protein','calories','pushups','foods','timer'].forEach(k => localStorage.removeItem(prefix + k));
     }
-    if (loc.includes("The Edge Essex")) {
-      return { text: "The Edge Essex Sports Center", commute: "20-minute commute from home", icon: "🚙" };
-    }
-    if (loc.includes("Home Workout")) {
-      return { text: "Home HQ Base", commute: "No commute. Zero excuses.", icon: "🏠" };
-    }
-    if (loc.includes("BHS")) {
-      return { text: "Burlington High School Gym", commute: "Sunday League Game-day commute", icon: "🏀" };
-    }
-    return { text: "Anywhere / Running Path", commute: "Unrestricted", icon: "🏃‍♂️" };
   };
 
-  const commuteInfo = getCommuteDetails();
+  const activeDaySchedule = constitutionData.weekly_schedule[selectedDay] || { location: "Rest", focus: "Recovery", time_blocks: { daytime: ["Active stretching & Recovery"] } };
+  const nonNegotiablesCompleted = constitutionData.daily_non_negotiables.filter((_, i) => checklistStates[`daily_habit_${i}`]).length;
+  const proteinPct = Math.min(100, Math.round((dailyProtein / 160) * 100));
+  const timerPct = Math.min(100, Math.round((timerSeconds / 2400) * 100));
 
-  // Calculate daily completion score (habits + schedule checkboxes)
-  const calculateDailyCompletion = () => {
-    const dailyHabitsKeys = constitutionData.daily_non_negotiables.map((_, i) => `daily_habit_${i}`);
-    const timeBlocksKeys = Object.entries(activeDaySchedule.time_blocks).flatMap(([blockKey, tasks]) => 
-      tasks.map((_, idx) => `schedule_${blockKey}_${idx}`)
-    );
-    
-    const allKeys = [...dailyHabitsKeys, ...timeBlocksKeys];
-    if (allKeys.length === 0) return 100;
-
-    const completedCount = allKeys.filter(k => !!checklistStates[k]).length;
-    return Math.round((completedCount / allKeys.length) * 100);
+  const blockMeta = {
+    morning_600_730: { label: "Morning Ritual", time: "6:00 – 7:30 AM", color: "#E8C547" },
+    work_hours_730_1730: { label: "Work Hours", time: "7:30 AM – 5:30 PM", color: "#7A9E5E" },
+    after_work_1730_2000: { label: "Evening Session", time: "5:30 – 8:00 PM", color: "#2D4A22" },
+    daytime: { label: "Full Day Block", time: "All Day", color: "#3D2B1F" },
+    game_time: { label: "Game Time", time: "Game Day", color: "#E8C547" },
   };
-
-  const completionPct = calculateDailyCompletion();
 
   return (
-    <div className="bg-[#0f1015] min-h-screen text-gray-200 font-sans pb-16">
-      
-      {/* 1. TOP HEADER HUD */}
-      <header className="border-b border-gray-800 bg-[#14151c] sticky top-0 z-50 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          
-          <div className="flex items-center gap-3">
-            <div className="bg-brand-500 text-white rounded-lg p-2.5 font-sporty font-bold tracking-widest text-xl shadow-md border border-brand-100 flex items-center justify-center">
-              🏀 BHGS
-            </div>
-            <div>
-              <h1 className="text-xl md:text-2xl font-bold font-sporty tracking-tight text-white flex items-center gap-2">
-                BALL HARD <span className="text-brand-500 font-black animate-pulse-glow">GET SHREDDED</span>
-              </h1>
-              <p className="text-xs text-gray-400 font-medium">YOUR PERSONAL ATHLETIC FITNESS CONSTITUTION</p>
+    <div style={{ fontFamily: "'Inter', sans-serif", backgroundColor: "#F5F0E8", minHeight: "100vh", maxWidth: 480, margin: "0 auto", position: "relative" }}>
+
+      {/* ── HEADER ── */}
+      <header style={{ background: "linear-gradient(135deg, #2D4A22 0%, #3D5A2A 100%)", padding: "20px 20px 16px", position: "sticky", top: 0, zIndex: 50 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ fontSize: 22 }}>🌿</span>
+              <div>
+                <div style={{ color: "#E8C547", fontWeight: 800, fontSize: 16, letterSpacing: "0.08em", textTransform: "uppercase" }}>Ball Hard</div>
+                <div style={{ color: "#c9d8b5", fontSize: 10, letterSpacing: "0.15em", textTransform: "uppercase" }}>Get Shredded</div>
+              </div>
             </div>
           </div>
-
-          {/* Quick Metrics & Streak Indicator */}
-          <div className="flex items-center gap-4 text-xs md:text-sm bg-gray-900 border border-gray-800 p-2 rounded-xl">
-            <div className="px-3 border-r border-gray-800">
-              <span className="text-gray-400 block text-[10px] tracking-widest uppercase">Target Weight</span>
-              <span className="font-sporty font-bold text-white text-sm">160 lbs</span>
-            </div>
-            <div className="px-3 border-r border-gray-800">
-              <span className="text-gray-400 block text-[10px] tracking-widest uppercase">Current Gauge</span>
-              <span className="font-sporty font-bold text-brand-500 text-sm">{loggedWeight} lbs</span>
-            </div>
-            <div className="px-3">
-              <span className="text-gray-400 block text-[10px] tracking-widest uppercase">Target BF%</span>
-              <span className="font-sporty font-bold text-neonGreen text-sm">15%</span>
-            </div>
+          {/* Weight pill */}
+          <div style={{ background: "rgba(232,197,71,0.15)", border: "1px solid rgba(232,197,71,0.4)", borderRadius: 24, padding: "6px 14px", textAlign: "center" }}>
+            <div style={{ color: "#c9d8b5", fontSize: 9, letterSpacing: "0.12em", textTransform: "uppercase" }}>Weight</div>
+            <div style={{ color: "#E8C547", fontWeight: 800, fontSize: 15 }}>{loggedWeight} lbs</div>
           </div>
+        </div>
 
+        {/* Day Selector Strip */}
+        <div style={{ display: "flex", gap: 6, marginTop: 14, overflowX: "auto", paddingBottom: 2, scrollbarWidth: "none" }}>
+          {DAYS_OF_WEEK.map(day => {
+            const isToday = day === todayDayString;
+            const isSelected = day === selectedDay;
+            return (
+              <button key={day} onClick={() => setSelectedDay(day)} style={{
+                flex: "0 0 auto",
+                padding: "8px 12px",
+                borderRadius: 10,
+                border: isSelected ? "2px solid #E8C547" : "2px solid rgba(255,255,255,0.1)",
+                background: isSelected ? "rgba(232,197,71,0.2)" : "rgba(255,255,255,0.06)",
+                color: isSelected ? "#E8C547" : "#c9d8b5",
+                fontSize: 12,
+                fontWeight: isSelected ? 700 : 500,
+                cursor: "pointer",
+                position: "relative",
+                whiteSpace: "nowrap",
+              }}>
+                {DAY_ABBREVS[day]}
+                {isToday && <span style={{ position: "absolute", top: 2, right: 2, width: 5, height: 5, borderRadius: "50%", background: "#E8C547" }} />}
+              </button>
+            );
+          })}
         </div>
       </header>
 
-      {/* 2. MAIN SCREEN BODY */}
-      <main className="max-w-7xl mx-auto px-4 mt-8">
-        
-        {/* Dynamic Day Selector Banner */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-white tracking-wide uppercase flex items-center gap-2">
-              <span className="text-brand-500">📅</span> Weekly Schedule Matrix
-            </h2>
-            <span className="text-xs text-gray-400">Select any day to view &amp; log schedule</span>
-          </div>
-          
-          <div className="grid grid-cols-4 md:grid-cols-7 gap-2">
-            {DAYS_OF_WEEK.map((day) => {
-              const isToday = day === todayDayString;
-              const isSelected = day === selectedDay;
-              
-              return (
-                <button
-                  key={day}
-                  onClick={() => setSelectedDay(day)}
-                  className={`py-3 px-2 rounded-xl border flex flex-col items-center justify-center transition-all ${
-                    isSelected 
-                      ? "bg-brand-500/10 border-brand-500 text-white shadow-md neon-glow-brand" 
-                      : "bg-panelBg border-gray-800 hover:border-gray-700 text-gray-400"
-                  }`}
-                >
-                  <span className="text-[10px] tracking-wider uppercase opacity-80">{day.substring(0, 3)}</span>
-                  <span className="text-sm font-sporty font-bold tracking-tight mt-1">
-                    {day === "Sunday" ? "League" : constitutionData.weekly_schedule[day]?.focus.split(" ")[0] || "Rest"}
-                  </span>
-                  {isToday && (
-                    <span className="mt-1 px-1.5 py-0.5 bg-brand-500 text-[8px] text-white font-bold rounded uppercase tracking-widest scale-90">
-                      TODAY
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
+      {/* ── FOCUS BANNER ── */}
+      <div style={{ background: "#3D2B1F", padding: "12px 20px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div>
+          <div style={{ color: "#c9a87c", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase" }}>{selectedDay}'s Focus</div>
+          <div style={{ color: "#F5F0E8", fontWeight: 700, fontSize: 15 }}>{activeDaySchedule.focus}</div>
         </div>
+        <div style={{ color: "#c9a87c", fontSize: 11, textAlign: "right" }}>
+          <div>📍 {activeDaySchedule.location}</div>
+        </div>
+      </div>
 
-        {/* 3. CORE SUB-DASHBOARD PANELS */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* LEFT PANELS: CHECKLISTS & TIMEBLOCKS (8 COLUMNS) */}
-          <div className="lg:col-span-8 flex flex-col gap-8">
-            
-            {/* PANEL: TODAYS TARGET & COMMUTE INFO */}
-            <div className="p-6 bg-[#1a1b23] border border-gray-800 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="px-2.5 py-1 bg-brand-500/20 text-brand-500 border border-brand-500/30 text-xs font-bold rounded-lg uppercase tracking-wider font-sporty">
-                    {selectedDay}'s Focus
-                  </span>
-                  <span className="text-gray-400 text-xs flex items-center gap-1">
-                    📍 {commuteInfo.icon} {commuteInfo.text}
-                  </span>
-                </div>
-                <h2 className="text-2xl font-extrabold text-white tracking-tight">
-                  {activeDaySchedule.focus}
-                </h2>
-                <p className="text-sm text-gray-400 mt-1 flex items-center gap-1">
-                  🚗 Commute: <span className="text-brand-500 font-semibold">{commuteInfo.commute}</span>
-                </p>
-              </div>
+      {/* ── MAIN CONTENT ── */}
+      <main style={{ padding: "0 0 80px" }}>
 
-              {/* Workout Checklist Target Meter */}
-              <div className="bg-gray-950/40 p-4 rounded-xl border border-gray-800/60 w-full md:w-auto text-center md:text-left flex flex-col items-center">
-                <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Day Completion Score</div>
-                <div className="font-sporty font-black text-2xl text-neonGreen">
-                  {completionPct}%
-                </div>
+        {/* ═══ TAB: TODAY ═══ */}
+        {activeTab === "today" && (
+          <div style={{ padding: "20px 16px", display: "flex", flexDirection: "column", gap: 16 }}>
+
+            {/* Progress Snapshot */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0" }}>
+              <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, marginBottom: 14, letterSpacing: "0.04em", textTransform: "uppercase" }}>Daily Progress</div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+                {[
+                  { label: "Habits", value: `${nonNegotiablesCompleted}/4`, sub: "completed", color: "#2D4A22" },
+                  { label: "Protein", value: `${dailyProtein}g`, sub: `${proteinPct}% of 160g`, color: "#7A9E5E" },
+                  { label: "Session", value: formatTime(timerSeconds), sub: timerPct >= 100 ? "✓ Goal met" : `${timerPct}% of 40m`, color: "#E8C547" },
+                ].map(stat => (
+                  <div key={stat.label} style={{ textAlign: "center", padding: "10px 6px", background: "#F9F6F1", borderRadius: 10, border: "1px solid #ede4d8" }}>
+                    <div style={{ color: stat.color, fontWeight: 800, fontSize: 16 }}>{stat.value}</div>
+                    <div style={{ color: "#8B7355", fontSize: 9, marginTop: 2, textTransform: "uppercase", letterSpacing: "0.08em" }}>{stat.label}</div>
+                    <div style={{ color: "#b5a090", fontSize: 9 }}>{stat.sub}</div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* PANEL: DAILY NON-NEGOTIABLE CORE HABITS */}
-            <div className="bg-panelBg border border-gray-800 rounded-2xl p-6">
-              <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
-                <h3 className="font-sporty font-bold text-white uppercase text-sm tracking-widest flex items-center gap-2">
-                  <span className="text-neonCyan">⚡</span> Daily Non-Negotiables
-                </h3>
-                <span className="text-xs text-gray-400">Must hit these every single day</span>
+            {/* Non-Negotiables */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.04em" }}>Non-Negotiables</div>
+                <div style={{ background: "#2D4A22", color: "#E8C547", borderRadius: 20, padding: "2px 10px", fontSize: 11, fontWeight: 700 }}>
+                  {nonNegotiablesCompleted}/4
+                </div>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {constitutionData.daily_non_negotiables.map((habit, index) => {
-                  const habitKey = `daily_habit_${index}`;
-                  const isChecked = !!checklistStates[habitKey];
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {constitutionData.daily_non_negotiables.map((habit, i) => {
+                  const key = `daily_habit_${i}`;
+                  const checked = !!checklistStates[key];
                   return (
-                    <label 
-                      key={habitKey}
-                      className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer select-none transition-all ${
-                        isChecked 
-                          ? "bg-neonCyan/5 border-neonCyan/30 text-gray-400" 
-                          : "bg-gray-900/40 border-gray-800/80 text-gray-200 hover:border-gray-700"
-                      }`}
-                    >
-                      <input 
-                        type="checkbox"
-                        checked={isChecked}
-                        onChange={(e) => handleCheckChange(habitKey, e.target.checked)}
-                        className="w-5 h-5 rounded border-gray-700 bg-gray-800 text-neonCyan focus:ring-0 focus:ring-offset-0 mt-0.5"
-                      />
-                      <div className="flex flex-col">
-                        <span className={`text-sm font-medium ${isChecked ? 'line-through text-gray-500' : ''}`}>
-                          {habit}
-                        </span>
-                        {habit.includes("meditation") && (
-                          <span className="text-[10px] text-neonCyan mt-0.5 font-sporty">HEADSPACE APP REQUIRED</span>
-                        )}
-                        {habit.includes("Kegel") && (
-                          <span className="text-[10px] text-brand-500 mt-0.5 font-sporty">THE COACH APP REQUIRED</span>
-                        )}
+                    <label key={key} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px", borderRadius: 10, background: checked ? "#F0F7EC" : "#F9F6F1", border: `1px solid ${checked ? "#7A9E5E" : "#ede4d8"}`, cursor: "pointer" }}>
+                      <div style={{ width: 22, height: 22, borderRadius: 6, border: `2px solid ${checked ? "#2D4A22" : "#c9b99a"}`, background: checked ? "#2D4A22" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        {checked && <span style={{ color: "#E8C547", fontSize: 13, fontWeight: 900 }}>✓</span>}
                       </div>
+                      <input type="checkbox" checked={checked} onChange={e => handleCheckChange(key, e.target.checked)} style={{ display: "none" }} />
+                      <span style={{ fontSize: 13, color: checked ? "#7A9E5E" : "#3D2B1F", textDecoration: checked ? "line-through" : "none", fontWeight: checked ? 400 : 500 }}>{habit}</span>
                     </label>
                   );
                 })}
               </div>
             </div>
 
-            {/* PANEL: INTERACTIVE TIMELINE WORKOUT & TASKS */}
-            <div className="bg-panelBg border border-gray-800 rounded-2xl p-6">
-              <div className="flex justify-between items-center mb-6 border-b border-gray-800 pb-3">
-                <h3 className="font-sporty font-bold text-white uppercase text-sm tracking-widest flex items-center gap-2">
-                  <span className="text-brand-500">🏆</span> Exercises &amp; Schedule Blocks
-                </h3>
-                <span className="text-xs bg-brand-500/20 text-brand-500 px-2 py-0.5 rounded font-sporty text-[10px]">
-                  TIME CONSTRAINTS APPLIED
-                </span>
-              </div>
-
-              {/* Check if weekday or weekend for structured timeline */}
-              <div className="space-y-6">
-                {Object.entries(activeDaySchedule.time_blocks).map(([blockKey, tasks]) => {
-                  // Beautify names of time blocks
-                  let title = "Day's Timeline Block";
-                  let timeRange = "";
-                  let accentColor = "border-l-brand-500";
-                  let textColor = "text-brand-500";
-
-                  if (blockKey === "morning_600_730") {
-                    title = "BEFORE WORK (6:00 - 7:30 AM)";
-                    timeRange = "Prime routine setup & dynamic activation";
-                    accentColor = "border-l-neonCyan";
-                    textColor = "text-neonCyan";
-                  } else if (blockKey === "work_hours_730_1730") {
-                    title = "WORK HOURS (7:30 AM - 5:30 PM)";
-                    timeRange = "Meeting intervals / Micro stretching & snacks";
-                    accentColor = "border-l-neonAmber";
-                    textColor = "text-neonAmber";
-                  } else if (blockKey === "after_work_1730_2000") {
-                    title = "AFTER WORK (5:30 - 8:00 PM)";
-                    timeRange = "Execution block. Heavy lifting / Game prep";
-                    accentColor = "border-l-neonGreen";
-                    textColor = "text-neonGreen";
-                  } else if (blockKey === "daytime") {
-                    title = "SATURDAY EXECUTION MATRIX";
-                    timeRange = "Full game prep & skill building";
-                  } else if (blockKey === "game_time") {
-                    title = "SUNDAY SHOWTIME (MENS LEAGUE)";
-                    timeRange = "Match execution at BHS";
-                  }
-
-                  return (
-                    <div key={blockKey} className={`pl-4 border-l-4 ${accentColor} bg-gray-900/25 p-4 rounded-r-xl`}>
-                      <div className="mb-3">
-                        <span className={`text-xs font-sporty font-bold tracking-wider ${textColor} uppercase block`}>
-                          {title}
-                        </span>
-                        <span className="text-xs text-gray-400 font-medium">
-                          {timeRange}
-                        </span>
-                      </div>
-
-                      <div className="space-y-3">
-                        {tasks.map((task, idx) => {
-                          const taskKey = `schedule_${blockKey}_${idx}`;
-                          const isChecked = !!checklistStates[taskKey];
-                          return (
-                            <label 
-                              key={taskKey}
-                              className={`flex items-start gap-3 p-2.5 rounded-lg cursor-pointer transition-all ${
-                                isChecked ? "bg-gray-950/20 opacity-60" : "bg-[#1f202a]/60 hover:bg-[#1f202a]"
-                              }`}
-                            >
-                              <input 
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={(e) => handleCheckChange(taskKey, e.target.checked)}
-                                className="w-4 h-4 rounded border-gray-700 bg-gray-800 text-brand-500 focus:ring-0 mt-0.5"
-                              />
-                              <div className="flex-grow">
-                                <span className={`text-sm ${isChecked ? 'line-through text-gray-500' : 'text-gray-200 font-medium'}`}>
-                                  {task}
-                                </span>
-                              </div>
-                            </label>
-                          );
-                        })}
-                      </div>
-
-                      {/* Special Dynamic Interactive Widget inside work hours block */}
-                      {blockKey === "work_hours_730_1730" && (
-                        <div className="mt-4 p-3 bg-gray-950/60 rounded-xl border border-gray-800 flex items-center justify-between gap-4">
-                          <div>
-                            <span className="text-xs font-bold text-white block uppercase tracking-wide">
-                              Pushup/Core Counter
-                            </span>
-                            <span className="text-[10px] text-gray-400 block">
-                              "Between meetings execution" from your Constitution
-                            </span>
-                          </div>
-                          
-                          <div className="flex items-center gap-2">
-                            <button 
-                              onClick={() => handlePushupIncrement(-5)}
-                              className="w-8 h-8 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center font-bold text-gray-300 hover:bg-gray-700 active:scale-95"
-                            >
-                              -5
-                            </button>
-                            <span className="px-4 py-1.5 bg-brand-500/10 text-brand-500 font-sporty font-bold text-lg rounded-lg border border-brand-500/20">
-                              {pushupCount}
-                            </span>
-                            <button 
-                              onClick={() => handlePushupIncrement(5)}
-                              className="w-8 h-8 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center font-bold text-gray-300 hover:bg-gray-700 active:scale-95"
-                            >
-                              +5
-                            </button>
-                          </div>
-                        </div>
-                      )}
-
-                    </div>
-                  );
-                })}
+            {/* Pushup Counter */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0" }}>
+              <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 12 }}>Work-Day Pushup Counter</div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <button onClick={() => handlePushupIncrement(-5)} style={{ width: 44, height: 44, borderRadius: 12, border: "2px solid #e8ddd0", background: "#F9F6F1", color: "#3D2B1F", fontSize: 16, fontWeight: 700, cursor: "pointer" }}>−</button>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ color: "#2D4A22", fontWeight: 900, fontSize: 40, lineHeight: 1 }}>{pushupCount}</div>
+                  <div style={{ color: "#8B7355", fontSize: 11, textTransform: "uppercase", letterSpacing: "0.08em" }}>total reps today</div>
+                </div>
+                <button onClick={() => handlePushupIncrement(5)} style={{ width: 44, height: 44, borderRadius: 12, border: "2px solid #2D4A22", background: "#2D4A22", color: "#E8C547", fontSize: 16, fontWeight: 700, cursor: "pointer" }}>+5</button>
               </div>
             </div>
 
-            {/* PANEL: DYNAMIC INTERACTIVE FUEL INTAKE PICKER (FOOD BANK) */}
-            <div className="bg-panelBg border border-gray-800 rounded-2xl p-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-gray-800 pb-4">
-                <div>
-                  <h3 className="font-sporty font-bold text-white uppercase text-sm tracking-widest flex items-center gap-2">
-                    <span className="text-neonGreen">🍗</span> Interactive Kitchen Fuel bank
-                  </h3>
-                  <p className="text-xs text-gray-400 mt-1">
-                    Click any food from your Constitution list below to log Protein &amp; Calories automatically!
-                  </p>
-                </div>
-
-                {/* Protein Counter Goal Meter */}
-                <div className="bg-gray-950/80 rounded-xl p-3 border border-gray-800 flex items-center gap-3">
-                  <div className="text-center">
-                    <span className="text-[9px] text-gray-400 tracking-wider uppercase block">Total Protein</span>
-                    <span className={`font-sporty font-black text-lg ${dailyProtein >= 160 ? 'text-neonGreen' : 'text-white'}`}>
-                      {dailyProtein}g
-                    </span>
-                  </div>
-                  <div className="text-xs text-gray-500">/</div>
-                  <div className="text-center">
-                    <span className="text-[9px] text-gray-400 tracking-wider uppercase block">Target</span>
-                    <span className="font-sporty font-bold text-gray-300 text-sm">160g</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Progress Bar of Protein Target */}
-              <div className="mb-6">
-                <div className="flex justify-between text-xs mb-1.5">
-                  <span className="text-gray-400 font-medium">Daily Protein Goal Progress</span>
-                  <span className="text-brand-500 font-bold font-sporty">
-                    {Math.min(100, Math.round((dailyProtein / 160) * 100))}%
-                  </span>
-                </div>
-                <div className="w-full bg-gray-900 h-2.5 rounded-full overflow-hidden border border-gray-800">
-                  <div 
-                    className="bg-gradient-to-r from-brand-500 to-neonCyan h-full transition-all duration-300" 
-                    style={{ width: `${Math.min(100, (dailyProtein / 160) * 100)}%` }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* Grid of Food Categories (from Constitution) */}
-              <div className="space-y-6">
-                
-                {/* 1. Protein Options */}
-                <div>
-                  <span className="text-xs font-sporty font-bold text-gray-300 uppercase tracking-widest block mb-2.5 border-b border-gray-800/50 pb-1">
-                    🥩 Proteins (High Priority)
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {nutritionPresets.filter(f => f.category === "protein").map(food => (
-                      <button
-                        key={food.name}
-                        onClick={() => handleEatFoodPreset(food)}
-                        className="px-3 py-1.5 rounded-lg bg-[#242531] border border-gray-700/60 text-xs text-white hover:border-brand-500 hover:bg-[#2c2d3d] flex items-center gap-1.5 transition-all active:scale-95"
-                      >
-                        <span className="font-bold text-brand-500">+{food.protein}g</span>
-                        <span>{food.name.split(" ")[0]}</span>
-                        <span className="text-[10px] text-gray-400">({food.calories} kcal)</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 2. Fibers Options */}
-                <div>
-                  <span className="text-xs font-sporty font-bold text-neonGreen uppercase tracking-widest block mb-2.5 border-b border-gray-800/50 pb-1">
-                    🥬 Fiber &amp; Vegetables
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {nutritionPresets.filter(f => f.category === "fiber").map(food => (
-                      <button
-                        key={food.name}
-                        onClick={() => handleEatFoodPreset(food)}
-                        className="px-3 py-1.5 rounded-lg bg-[#1f2620] border border-green-900/40 text-xs text-white hover:border-neonGreen hover:bg-[#28322a] flex items-center gap-1.5 transition-all active:scale-95"
-                      >
-                        <span className="font-bold text-neonGreen">+{food.protein}g</span>
-                        <span>{food.name}</span>
-                        <span className="text-[10px] text-gray-400">({food.calories} kcal)</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 3. Carbs & Supplements */}
-                <div>
-                  <span className="text-xs font-sporty font-bold text-neonCyan uppercase tracking-widest block mb-2.5 border-b border-gray-800/50 pb-1">
-                    🍚 Complex Carbs, Supplement &amp; Hydration
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {nutritionPresets.filter(f => ["carbs", "supplements_and_hydration"].includes(f.category)).map(food => (
-                      <button
-                        key={food.name}
-                        onClick={() => handleEatFoodPreset(food)}
-                        className="px-3 py-1.5 rounded-lg bg-[#1f2831] border border-cyan-900/40 text-xs text-white hover:border-neonCyan hover:bg-[#25323d] flex items-center gap-1.5 transition-all active:scale-95"
-                      >
-                        <span className="font-bold text-neonCyan">Log Preset</span>
-                        <span>{food.name}</span>
-                        <span className="text-[10px] text-gray-400">({food.calories} kcal)</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Add Custom Calories & Protein Log form */}
-              <form onSubmit={handleCustomFoodAdd} className="mt-6 p-4 bg-gray-950/60 rounded-xl border border-gray-800/80">
-                <span className="text-xs font-bold text-white block uppercase tracking-wide mb-3">
-                  Log Custom Intake (Unlisted Item)
-                </span>
-                
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  <div>
-                    <label className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Protein (g)</label>
-                    <input 
-                      type="number"
-                      placeholder="e.g. 25"
-                      value={customProteinInput}
-                      onChange={(e) => setCustomProteinInput(e.target.value)}
-                      className="w-full bg-gray-900 border border-gray-800 rounded-lg py-1.5 px-2.5 text-xs text-white focus:outline-none focus:border-brand-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] text-gray-400 uppercase tracking-wider block mb-1">Calories (kcal)</label>
-                    <input 
-                      type="number"
-                      placeholder="e.g. 350"
-                      value={customCaloriesInput}
-                      onChange={(e) => setCustomCaloriesInput(e.target.value)}
-                      className="w-full bg-gray-900 border border-gray-800 rounded-lg py-1.5 px-2.5 text-xs text-white focus:outline-none focus:border-brand-500"
-                    />
-                  </div>
-                  <div className="col-span-2 md:col-span-1 flex items-end">
-                    <button 
-                      type="submit"
-                      className="w-full py-1.5 px-4 bg-brand-500 hover:bg-brand-600 text-white rounded-lg text-xs font-sporty font-bold uppercase tracking-wide transition-all active:scale-95 h-[34px]"
-                    >
-                      LOG FOOD
-                    </button>
-                  </div>
-                </div>
-              </form>
-
-              {/* Custom Food intake history logs for today */}
-              {customFoodsLogged.length > 0 && (
-                <div className="mt-6 border-t border-gray-800 pt-4">
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="text-xs font-bold text-gray-300 uppercase tracking-wider block">
-                      Today's Logged Intakes
-                    </span>
-                    <span className="text-[10px] text-gray-500">
-                      Total Calories Logged: <span className="text-neonAmber font-bold">{caloriesLogged} kcal</span>
-                    </span>
-                  </div>
-
-                  <div className="max-h-40 overflow-y-auto space-y-2 pr-1">
-                    {customFoodsLogged.map((food) => (
-                      <div key={food.id} className="flex items-center justify-between p-2.5 bg-gray-900/50 rounded-lg border border-gray-800/40 text-xs">
-                        <div>
-                          <span className="font-semibold text-white block">{food.name}</span>
-                          <span className="text-[10px] text-gray-500">{food.time}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="text-brand-500 font-bold font-sporty">{food.protein}g Pro</span>
-                          <span className="text-neonAmber font-bold font-sporty">{food.calories} kcal</span>
-                          <button 
-                            onClick={() => deleteLoggedFood(food.id, food.protein, food.calories)}
-                            className="text-red-500 hover:text-red-400 hover:scale-110 p-1"
-                            title="Delete Entry"
-                          >
-                            ✕
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-            </div>
-
+            {/* Reset */}
+            <button onClick={handleResetDay} style={{ background: "transparent", border: "1px solid #d4b8a0", borderRadius: 10, padding: "10px 16px", color: "#a08060", fontSize: 12, cursor: "pointer", textAlign: "center" }}>
+              Reset {selectedDay}'s logs
+            </button>
           </div>
+        )}
 
-          {/* RIGHT PANELS: ACTIVE TIMER, COMMUTES, GENERAL RULES, GOALS (4 COLUMNS) */}
-          <div className="lg:col-span-4 flex flex-col gap-8">
-            
-            {/* SUB-PANEL: STOPWATCH WORKOUT MINIMUM TRACKER */}
-            <div className="bg-panelBg border border-gray-800 rounded-2xl p-6 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-3xl"></div>
-              
-              <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
-                <h3 className="font-sporty font-bold text-white uppercase text-xs tracking-widest flex items-center gap-1.5">
-                  <span className="text-brand-500 animate-pulse-glow">⏱️</span> Workout Session Timer
-                </h3>
-                <span className="text-[10px] text-gray-400 font-sporty">MIN 40 MINS DAILY Target</span>
-              </div>
+        {/* ═══ TAB: FOOD / FUEL ═══ */}
+        {activeTab === "food" && (
+          <div style={{ padding: "20px 16px", display: "flex", flexDirection: "column", gap: 16 }}>
 
-              {/* Countdown clock style circle */}
-              <div className="flex flex-col items-center justify-center py-6 bg-gray-950/60 rounded-xl border border-gray-800/80 mb-4">
-                <div className="font-sporty text-3xl font-black text-white tracking-widest leading-none mb-1">
-                  {formatTime(timerSeconds)}
-                </div>
-                <div className="text-[9px] text-gray-400 uppercase tracking-widest font-sporty flex items-center gap-1">
-                  {timerSeconds >= 2400 ? (
-                    <span className="text-neonGreen font-bold flex items-center gap-0.5">
-                      ✓ DAILY Target Met (40m)
-                    </span>
-                  ) : (
-                    <span>Progress: {Math.min(100, Math.round((timerSeconds / 2400) * 100))}% of Daily Target</span>
-                  )}
-                </div>
-
-                {/* Progress bar inside stopwatch */}
-                <div className="w-11/12 bg-gray-900 h-1.5 rounded-full mt-3 overflow-hidden border border-gray-800/40">
-                  <div 
-                    className="bg-neonGreen h-full transition-all duration-300"
-                    style={{ width: `${Math.min(100, (timerSeconds / 2400) * 100)}%` }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* Stopwatch Action Controls */}
-              <div className="grid grid-cols-3 gap-2">
-                {!isTimerRunning ? (
-                  <button 
-                    onClick={startWorkoutTimer}
-                    className="col-span-2 py-2 px-3 bg-brand-500 hover:bg-brand-600 text-white rounded-lg text-xs font-bold font-sporty uppercase tracking-widest text-center"
-                  >
-                    ▶ START
-                  </button>
-                ) : (
-                  <button 
-                    onClick={stopWorkoutTimer}
-                    className="col-span-2 py-2 px-3 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-bold font-sporty uppercase tracking-widest text-center"
-                  >
-                    ❚❚ PAUSE
-                  </button>
-                )}
-                <button 
-                  onClick={resetWorkoutTimer}
-                  className="py-2 px-3 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-xs font-bold font-sporty uppercase tracking-widest text-center"
-                >
-                  RESET
-                </button>
-              </div>
-            </div>
-
-            {/* HYDRATION HUD GAUGE (128 oz target) */}
-            <div className="bg-panelBg border border-gray-800 rounded-2xl p-6 relative overflow-hidden">
-              <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
-                <h3 className="font-sporty font-bold text-white uppercase text-xs tracking-widest flex items-center gap-1.5">
-                  <span className="text-neonCyan">💧</span> Daily Hydration Target
-                </h3>
-                <span className="text-[10px] text-neonCyan font-bold uppercase font-sporty">Goal: 1 Gallon</span>
-              </div>
-
-              <div className="flex items-center justify-between mb-4 bg-gray-950/40 p-3 rounded-xl border border-gray-800/60">
+            {/* Protein Meter */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 10 }}>
                 <div>
-                  <span className="text-[10px] text-gray-400 block uppercase font-semibold">Total Intake</span>
-                  <span className="font-sporty font-bold text-lg text-white">{waterLoggedOz} oz <span className="text-xs text-gray-500">/ 128 oz</span></span>
+                  <div style={{ color: "#8B7355", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.1em" }}>Daily Protein</div>
+                  <div style={{ color: "#2D4A22", fontWeight: 900, fontSize: 32, lineHeight: 1 }}>{dailyProtein}g <span style={{ color: "#b5a090", fontWeight: 400, fontSize: 16 }}>/ 160g</span></div>
                 </div>
-                <div className="text-right">
-                  <span className="text-[10px] text-gray-400 block uppercase font-semibold">Progress</span>
-                  <span className="font-sporty font-bold text-lg text-neonCyan">{Math.min(100, Math.round((waterLoggedOz / 128) * 100))}%</span>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{ color: "#8B7355", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.1em" }}>Calories</div>
+                  <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 22 }}>{caloriesLogged} <span style={{ color: "#b5a090", fontWeight: 400, fontSize: 13 }}>kcal</span></div>
                 </div>
               </div>
-
-              <div className="grid grid-cols-3 gap-2 mb-4">
-                <button 
-                  onClick={() => handleWaterAdd(16)}
-                  className="py-2 bg-gray-900 border border-gray-800 rounded-lg hover:border-neonCyan hover:bg-gray-800 text-xs font-bold text-white transition-all active:scale-95"
-                >
-                  +16 oz (Glass)
-                </button>
-                <button 
-                  onClick={() => handleWaterAdd(32)}
-                  className="py-2 bg-gray-900 border border-gray-800 rounded-lg hover:border-neonCyan hover:bg-gray-800 text-xs font-bold text-white transition-all active:scale-95"
-                >
-                  +32 oz (Bottle)
-                </button>
-                <button 
-                  onClick={() => handleWaterAdd(-16)}
-                  className="py-2 bg-red-950/20 border border-red-900/40 rounded-lg hover:bg-red-900/20 text-xs text-red-400 transition-all active:scale-95"
-                >
-                  Subtract
-                </button>
+              {/* Progress bar */}
+              <div style={{ background: "#f0e8dc", borderRadius: 8, height: 10, overflow: "hidden" }}>
+                <div style={{ background: "linear-gradient(90deg, #2D4A22, #7A9E5E)", height: "100%", width: `${proteinPct}%`, borderRadius: 8, transition: "width 0.4s ease" }} />
               </div>
+              <div style={{ color: "#8B7355", fontSize: 11, marginTop: 6 }}>{proteinPct}% of daily goal</div>
             </div>
 
-            {/* SUB-PANEL: WEIGHT DROPPING COMPANION (170 lbs -> 160 lbs) */}
-            <div className="bg-panelBg border border-gray-800 rounded-2xl p-6">
-              <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
-                <h3 className="font-sporty font-bold text-white uppercase text-xs tracking-widest flex items-center gap-1.5">
-                  <span className="text-neonCyan">⚖️</span> Weight Companion
-                </h3>
-                <span className="text-[10px] text-neonCyan font-bold uppercase font-sporty">Goal: 160 lbs</span>
-              </div>
-
-              {/* Range scale */}
-              <div className="mb-4">
-                <div className="flex justify-between text-xs font-sporty font-semibold mb-2">
-                  <span className="text-gray-400">Target (160)</span>
-                  <span className="text-white bg-brand-500/20 px-2 py-0.5 rounded border border-brand-500/20">{loggedWeight} lbs</span>
-                  <span className="text-gray-400">Current Base (170)</span>
-                </div>
-                
-                <input 
-                  type="range"
-                  min="155"
-                  max="175"
-                  step="0.5"
-                  value={loggedWeight}
-                  onChange={(e) => handleWeightChange(e.target.value)}
-                  className="w-full accent-brand-500 bg-gray-900 rounded-lg appearance-none h-2 border border-gray-800 cursor-pointer"
-                />
-              </div>
-
-              {/* Progress Milestones Display */}
-              <div className="space-y-3 bg-gray-950/40 p-4 rounded-xl border border-gray-800/80">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-gray-400">Lbs remaining to target:</span>
-                  <span className="font-sporty font-bold text-white">{(loggedWeight - 160).toFixed(1)} lbs</span>
-                </div>
-                
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-gray-400">Estimated Body Fat Goal:</span>
-                  <span className="font-bold text-neonGreen">15% Target BF</span>
-                </div>
-
-                <div className="flex items-center justify-between text-xs border-t border-gray-800/80 pt-2">
-                  <span className="text-gray-400">Abs Visual Milestone:</span>
-                  <span className="font-medium text-neonCyan">6-Pack Core Activation</span>
+            {/* Food Categories */}
+            {[
+              { cat: "protein", label: "Proteins", emoji: "🥩", borderColor: "#c9a87c", bgColor: "#fdf8f3" },
+              { cat: "fiber", label: "Fiber & Greens", emoji: "🥬", borderColor: "#7A9E5E", bgColor: "#f4faf0" },
+              { cat: "carbs", label: "Complex Carbs", emoji: "🍠", borderColor: "#E8C547", bgColor: "#fdfdf0" },
+              { cat: "supplements", label: "Supplements & Hydration", emoji: "⚡", borderColor: "#3D2B1F", bgColor: "#f8f4f0" },
+            ].map(({ cat, label, emoji, borderColor, bgColor }) => (
+              <div key={cat} style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0" }}>
+                <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, marginBottom: 10 }}>{emoji} {label}</div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {nutritionPresets.filter(f => f.category === cat).map(food => (
+                    <button key={food.name} onClick={() => handleEatFoodPreset(food)} style={{
+                      padding: "8px 12px", borderRadius: 10, border: `1px solid ${borderColor}`,
+                      background: bgColor, cursor: "pointer", fontSize: 12, color: "#3D2B1F",
+                      display: "flex", alignItems: "center", gap: 5, fontWeight: 500,
+                    }}>
+                      <span>{food.emoji}</span>
+                      <span>{food.name.split(" ")[0]}</span>
+                      {food.protein > 0 && <span style={{ color: "#2D4A22", fontWeight: 700, fontSize: 11 }}>+{food.protein}g</span>}
+                      <span style={{ color: "#8B7355", fontSize: 10 }}>{food.calories}cal</span>
+                    </button>
+                  ))}
                 </div>
               </div>
-            </div>
+            ))}
 
-            {/* SUB-PANEL: CONSTITUTION LONG TERM GOALS CHECKLIST */}
-            <div className="bg-panelBg border border-gray-800 rounded-2xl p-6">
-              <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
-                <h3 className="font-sporty font-bold text-white uppercase text-xs tracking-widest flex items-center gap-1.5">
-                  <span className="text-brand-500">🏆</span> Constitution Goal Milestones
-                </h3>
-                <span className="text-[10px] text-gray-400">GLOBAL CHECKLIST</span>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">Basketball Objectives</span>
-                  <div className="space-y-2">
-                    {constitutionData.goals.basketball.map((goal, i) => (
-                      <label 
-                        key={`lt_bask_${i}`}
-                        className="flex items-start gap-2.5 p-2 bg-gray-900/40 rounded-lg border border-gray-800/60 hover:border-brand-500/30 cursor-pointer select-none transition-all"
-                      >
-                        <input 
-                          type="checkbox"
-                          checked={!!completedLongTermGoals[goal]}
-                          onChange={() => toggleLongTermGoal(goal)}
-                          className="w-4 h-4 rounded border-gray-700 bg-gray-800 text-brand-500 focus:ring-0 mt-0.5"
-                        />
-                        <span className={`text-[11px] font-medium leading-relaxed ${completedLongTermGoals[goal] ? 'line-through text-gray-500' : 'text-gray-300'}`}>
-                          {goal}
-                        </span>
-                      </label>
-                    ))}
+            {/* Custom Log */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0" }}>
+              <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, marginBottom: 12 }}>🍽 Log Custom Intake</div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+                {[["Protein (g)", customProteinInput, setCustomProteinInput], ["Calories (kcal)", customCaloriesInput, setCustomCaloriesInput]].map(([label, val, setter]) => (
+                  <div key={label}>
+                    <div style={{ color: "#8B7355", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>{label}</div>
+                    <input type="number" placeholder="0" value={val} onChange={e => setter(e.target.value)}
+                      style={{ width: "100%", padding: "10px 12px", borderRadius: 10, border: "1px solid #e8ddd0", background: "#F9F6F1", color: "#3D2B1F", fontSize: 14, boxSizing: "border-box", outline: "none" }} />
                   </div>
-                </div>
-
-                <div>
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">Structural Foundation</span>
-                  <div className="space-y-2">
-                    {constitutionData.goals.body.structural_foundation.map((goal, i) => (
-                      <label 
-                        key={`lt_body_${i}`}
-                        className="flex items-start gap-2.5 p-2 bg-gray-900/40 rounded-lg border border-gray-800/60 hover:border-brand-500/30 cursor-pointer select-none transition-all"
-                      >
-                        <input 
-                          type="checkbox"
-                          checked={!!completedLongTermGoals[goal]}
-                          onChange={() => toggleLongTermGoal(goal)}
-                          className="w-4 h-4 rounded border-gray-700 bg-gray-800 text-brand-500 focus:ring-0 mt-0.5"
-                        />
-                        <span className={`text-[11px] font-medium leading-relaxed ${completedLongTermGoals[goal] ? 'line-through text-gray-500' : 'text-gray-300'}`}>
-                          {goal}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
+                ))}
               </div>
-            </div>
-
-            {/* RESET BUTTON MATRIX FOR INDIVIDUAL LOG DATA */}
-            <div className="text-center pt-2">
-              <button
-                onClick={handleResetDay}
-                className="text-xs text-red-500 hover:text-red-400 border border-red-900/40 hover:border-red-500/50 bg-red-950/20 px-4 py-2 rounded-xl transition-all"
-              >
-                Reset Daily Checklist &amp; Counters
+              <button onClick={handleCustomFoodAdd} style={{ width: "100%", padding: "12px", borderRadius: 10, background: "#2D4A22", color: "#E8C547", border: "none", fontWeight: 700, fontSize: 14, cursor: "pointer", letterSpacing: "0.04em" }}>
+                Log Food
               </button>
             </div>
 
+            {/* Food Log History */}
+            {customFoodsLogged.length > 0 && (
+              <div style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0" }}>
+                <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, marginBottom: 12 }}>Today's Intake Log</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, maxHeight: 280, overflowY: "auto" }}>
+                  {customFoodsLogged.map(food => (
+                    <div key={food.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px", background: "#F9F6F1", borderRadius: 10, border: "1px solid #ede4d8" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <span style={{ fontSize: 18 }}>{food.emoji || "🍽"}</span>
+                        <div>
+                          <div style={{ color: "#3D2B1F", fontWeight: 600, fontSize: 12 }}>{food.name}</div>
+                          <div style={{ color: "#8B7355", fontSize: 10 }}>{food.time}</div>
+                        </div>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <span style={{ color: "#2D4A22", fontWeight: 700, fontSize: 12 }}>{food.protein}g</span>
+                        <span style={{ color: "#8B7355", fontSize: 11 }}>{food.calories}cal</span>
+                        <button onClick={() => deleteLoggedFood(food.id, food.protein, food.calories)} style={{ background: "none", border: "none", color: "#c9a0a0", cursor: "pointer", fontSize: 14, padding: "2px 4px" }}>✕</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
+        )}
 
-        </div>
+        {/* ═══ TAB: TIMER ═══ */}
+        {activeTab === "timer" && (
+          <div style={{ padding: "20px 16px", display: "flex", flexDirection: "column", gap: 16 }}>
+
+            {/* Big Timer Display */}
+            <div style={{ background: "linear-gradient(145deg, #2D4A22, #3D5A2A)", borderRadius: 20, padding: "32px 24px", textAlign: "center", boxShadow: "0 8px 32px rgba(45,74,34,0.3)" }}>
+              <div style={{ color: "#c9d8b5", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>Session Timer</div>
+              <div style={{ color: timerSeconds >= 2400 ? "#E8C547" : "#F5F0E8", fontWeight: 900, fontSize: 64, letterSpacing: "0.05em", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
+                {formatTime(timerSeconds)}
+              </div>
+              <div style={{ color: "#7A9E5E", fontSize: 13, marginTop: 8 }}>
+                {timerSeconds >= 2400 ? "✓ Daily goal reached!" : `${timerPct}% of 40-minute goal`}
+              </div>
+
+              {/* Ring Progress */}
+              <div style={{ margin: "20px auto 0", position: "relative", width: 120, height: 120 }}>
+                <svg width="120" height="120" style={{ transform: "rotate(-90deg)" }}>
+                  <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
+                  <circle cx="60" cy="60" r="52" fill="none" stroke={timerSeconds >= 2400 ? "#E8C547" : "#7A9E5E"} strokeWidth="8"
+                    strokeDasharray={`${2 * Math.PI * 52}`}
+                    strokeDashoffset={`${2 * Math.PI * 52 * (1 - timerPct / 100)}`}
+                    strokeLinecap="round" style={{ transition: "stroke-dashoffset 0.5s ease" }} />
+                </svg>
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#F5F0E8", fontWeight: 800, fontSize: 18 }}>
+                  {timerPct}%
+                </div>
+              </div>
+            </div>
+
+            {/* Controls */}
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 10 }}>
+              {!isTimerRunning ? (
+                <button onClick={startTimer} style={{ padding: "16px", borderRadius: 14, background: "#2D4A22", color: "#E8C547", border: "none", fontWeight: 800, fontSize: 16, cursor: "pointer", letterSpacing: "0.06em" }}>
+                  ▶ START
+                </button>
+              ) : (
+                <button onClick={stopTimer} style={{ padding: "16px", borderRadius: 14, background: "#E8C547", color: "#2D4A22", border: "none", fontWeight: 800, fontSize: 16, cursor: "pointer", letterSpacing: "0.06em" }}>
+                  ❚❚ PAUSE
+                </button>
+              )}
+              <button onClick={resetTimer} style={{ padding: "16px", borderRadius: 14, background: "#F9F6F1", color: "#3D2B1F", border: "1px solid #e8ddd0", fontWeight: 700, fontSize: 14, cursor: "pointer" }}>
+                Reset
+              </button>
+            </div>
+
+            {/* Weight Slider */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0" }}>
+              <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 14 }}>⚖️ Weight Tracker</div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                <span style={{ color: "#8B7355", fontSize: 12 }}>Target: 160 lbs</span>
+                <span style={{ color: "#2D4A22", fontWeight: 800, fontSize: 20 }}>{loggedWeight} lbs</span>
+                <span style={{ color: "#8B7355", fontSize: 12 }}>Base: 170 lbs</span>
+              </div>
+              <input type="range" min="155" max="175" step="0.5" value={loggedWeight} onChange={e => handleWeightChange(e.target.value)}
+                style={{ width: "100%", accentColor: "#2D4A22" }} />
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 14 }}>
+                <div style={{ background: "#F9F6F1", borderRadius: 10, padding: "10px 12px", border: "1px solid #ede4d8" }}>
+                  <div style={{ color: "#8B7355", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em" }}>To Target</div>
+                  <div style={{ color: "#2D4A22", fontWeight: 800, fontSize: 18 }}>{(loggedWeight - 160).toFixed(1)} lbs</div>
+                </div>
+                <div style={{ background: "#F9F6F1", borderRadius: 10, padding: "10px 12px", border: "1px solid #ede4d8" }}>
+                  <div style={{ color: "#8B7355", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em" }}>Body Fat Goal</div>
+                  <div style={{ color: "#7A9E5E", fontWeight: 800, fontSize: 18 }}>15%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ═══ TAB: WEEKLY SCHEDULE ═══ */}
+        {activeTab === "schedule" && (
+          <div style={{ padding: "20px 16px", display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 15, marginBottom: 0 }}>
+              {selectedDay} — {activeDaySchedule.focus}
+            </div>
+
+            {Object.entries(activeDaySchedule.time_blocks).map(([blockKey, tasks]) => {
+              const meta = blockMeta[blockKey] || { label: blockKey, time: "", color: "#3D2B1F" };
+              return (
+                <div key={blockKey} style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0", borderLeftWidth: 4, borderLeftColor: meta.color }}>
+                  <div style={{ marginBottom: 12 }}>
+                    <div style={{ color: meta.color, fontWeight: 700, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.06em" }}>{meta.label}</div>
+                    <div style={{ color: "#8B7355", fontSize: 11 }}>{meta.time}</div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {tasks.map((task, idx) => {
+                      const taskKey = `schedule_${blockKey}_${idx}`;
+                      const checked = !!checklistStates[taskKey];
+                      return (
+                        <label key={taskKey} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderRadius: 10, background: checked ? "#F0F7EC" : "#F9F6F1", border: `1px solid ${checked ? "#7A9E5E" : "#ede4d8"}`, cursor: "pointer" }}>
+                          <div style={{ width: 20, height: 20, borderRadius: 5, border: `2px solid ${checked ? "#2D4A22" : "#c9b99a"}`, background: checked ? "#2D4A22" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                            {checked && <span style={{ color: "#E8C547", fontSize: 11, fontWeight: 900 }}>✓</span>}
+                          </div>
+                          <input type="checkbox" checked={checked} onChange={e => handleCheckChange(taskKey, e.target.checked)} style={{ display: "none" }} />
+                          <span style={{ fontSize: 13, color: checked ? "#7A9E5E" : "#3D2B1F", textDecoration: checked ? "line-through" : "none", fontWeight: 500 }}>{task}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+
+                  {/* Pushup counter inside work hours */}
+                  {blockKey === "work_hours_730_1730" && (
+                    <div style={{ marginTop: 12, padding: "12px", background: "#F9F6F1", borderRadius: 10, border: "1px solid #ede4d8", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div>
+                        <div style={{ color: "#3D2B1F", fontWeight: 600, fontSize: 12 }}>Pushup Counter</div>
+                        <div style={{ color: "#8B7355", fontSize: 10 }}>Between-meeting reps</div>
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <button onClick={() => handlePushupIncrement(-5)} style={{ width: 36, height: 36, borderRadius: 8, border: "1px solid #e8ddd0", background: "#fff", color: "#3D2B1F", fontWeight: 700, cursor: "pointer" }}>−5</button>
+                        <span style={{ color: "#2D4A22", fontWeight: 900, fontSize: 22, minWidth: 44, textAlign: "center" }}>{pushupCount}</span>
+                        <button onClick={() => handlePushupIncrement(5)} style={{ width: 36, height: 36, borderRadius: 8, border: "2px solid #2D4A22", background: "#2D4A22", color: "#E8C547", fontWeight: 700, cursor: "pointer" }}>+5</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* ═══ TAB: GOALS ═══ */}
+        {activeTab === "goals" && (
+          <div style={{ padding: "20px 16px", display: "flex", flexDirection: "column", gap: 16 }}>
+
+            {/* Body Goals */}
+            <div style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0" }}>
+              <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 14 }}>💪 Body Goals</div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 }}>
+                {[
+                  { label: "Target Weight", value: "160 lbs", color: "#2D4A22" },
+                  { label: "Body Fat", value: "15%", color: "#7A9E5E" },
+                ].map(item => (
+                  <div key={item.label} style={{ background: "#F9F6F1", borderRadius: 10, padding: "12px", border: "1px solid #ede4d8", textAlign: "center" }}>
+                    <div style={{ color: item.color, fontWeight: 800, fontSize: 22 }}>{item.value}</div>
+                    <div style={{ color: "#8B7355", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em", marginTop: 2 }}>{item.label}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {constitutionData.goals.body.aesthetic_and_posture.map(goal => (
+                  <div key={goal} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", background: "#F9F6F1", borderRadius: 10, border: "1px solid #ede4d8" }}>
+                    <span style={{ color: "#7A9E5E", fontWeight: 900 }}>→</span>
+                    <span style={{ color: "#3D2B1F", fontSize: 13, fontWeight: 500 }}>{goal}</span>
+                  </div>
+                ))}
+                {constitutionData.goals.body.structural_foundation.map(goal => (
+                  <div key={goal} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", background: "#F9F6F1", borderRadius: 10, border: "1px solid #ede4d8" }}>
+                    <span style={{ color: "#E8C547", fontWeight: 900 }}>→</span>
+                    <span style={{ color: "#3D2B1F", fontSize: 13, fontWeight: 500 }}>{goal}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Basketball Goals */}
+            <div style={{ background: "linear-gradient(145deg, #3D2B1F, #4a3525)", borderRadius: 16, padding: 16, boxShadow: "0 4px 20px rgba(61,43,31,0.25)" }}>
+              <div style={{ color: "#E8C547", fontWeight: 700, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 14 }}>🏀 Basketball Targets</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {constitutionData.goals.basketball.map((goal, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "12px", background: "rgba(255,255,255,0.07)", borderRadius: 10, border: "1px solid rgba(232,197,71,0.15)" }}>
+                    <span style={{ color: "#E8C547", fontWeight: 900, fontSize: 16 }}>{i + 1}</span>
+                    <span style={{ color: "#F5F0E8", fontSize: 13, fontWeight: 500, lineHeight: 1.4 }}>{goal}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Constitution PDF reminder */}
+            <div style={{ background: "#F9F6F1", borderRadius: 16, padding: 16, border: "1px solid #e8ddd0", textAlign: "center" }}>
+              <div style={{ fontSize: 28, marginBottom: 8 }}>📋</div>
+              <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13 }}>Fitness Constitution</div>
+              <div style={{ color: "#8B7355", fontSize: 12, marginTop: 4 }}>Your full plan lives in the PDF attached to this project.</div>
+            </div>
+          </div>
+        )}
 
       </main>
 
-      {/* FOOTER WIDGET */}
-      <footer className="mt-16 border-t border-gray-800 pt-8 text-center text-xs text-gray-500">
-        <p className="font-sporty">BALLHARD GET SHREDDED © 2026</p>
-        <p className="mt-1">Dedicated to building elite basketball performance, core stability, and bulletproof health.</p>
-      </footer>
-
+      {/* ── BOTTOM TAB BAR ── */}
+      <nav style={{
+        position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)",
+        width: "100%", maxWidth: 480, background: "#fff",
+        borderTop: "1px solid #e8ddd0", display: "grid", gridTemplateColumns: "repeat(5, 1fr)",
+        zIndex: 100, boxShadow: "0 -4px 20px rgba(61,43,31,0.1)"
+      }}>
+        {TABS.map(tab => {
+          const isActive = activeTab === tab.id;
+          return (
+            <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
+              padding: "10px 4px 12px",
+              background: "transparent",
+              border: "none",
+              cursor: "pointer",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 3,
+              borderTop: isActive ? "3px solid #2D4A22" : "3px solid transparent",
+            }}>
+              <span style={{ fontSize: 20 }}>{tab.emoji}</span>
+              <span style={{ fontSize: 10, fontWeight: isActive ? 700 : 500, color: isActive ? "#2D4A22" : "#8B7355", letterSpacing: "0.04em", textTransform: "uppercase" }}>
+                {tab.label}
+              </span>
+            </button>
+          );
+        })}
+      </nav>
     </div>
   );
 }
