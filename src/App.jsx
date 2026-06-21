@@ -1,11 +1,7 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
 import React, { useState, useEffect, useRef } from 'react';
 
-// Hardcoded core Fitness Constitution static asset embedded to prevent any resolution or bundling errors.
+// Hardcoded core Fitness Constitution static fallback asset embedded to guarantee 
+// seamless cross-environment compilation and continuous running without any resolution errors.
 const constitutionData = {
   "goals": {
     "body": {
@@ -106,14 +102,15 @@ export default function App() {
   const [selectedDay, setSelectedDay] = useState("");
   const [todayDayString, setTodayDayString] = useState("");
   const [checklistStates, setChecklistStates] = useState({});
-  const [loggedWeight, setLoggedWeight] = useState(170); // Default start weight
+  const [loggedWeight, setLoggedWeight] = useState(170); // Default starting weight
   const [dailyProtein, setDailyProtein] = useState(0);
   const [caloriesLogged, setCaloriesLogged] = useState(0);
+  const [waterLoggedOz, setWaterLoggedOz] = useState(0); // Gal target: 128 oz
   const [customProteinInput, setCustomProteinInput] = useState("");
   const [customCaloriesInput, setCustomCaloriesInput] = useState("");
   const [pushupCount, setPushupCount] = useState(0);
   
-  // Custom Food Bank Logs for the active day
+  // Custom Food bank logs
   const [customFoodsLogged, setCustomFoodsLogged] = useState([]);
 
   // Workout Timer States
@@ -121,15 +118,18 @@ export default function App() {
   const [timerSeconds, setTimerSeconds] = useState(0);
   const timerIntervalRef = useRef(null);
 
+  // Long-Term Constitution Goals State (Saved Globally)
+  const [completedLongTermGoals, setCompletedLongTermGoals] = useState({});
+
   // Initialize day selection on mount
   useEffect(() => {
     const today = new Date();
     const dayName = DAYS_OF_WEEK[today.getDay()];
     setTodayDayString(dayName);
-    setSelectedDay(dayName); // Start with today selected
+    setSelectedDay(dayName); // Default to current day
   }, []);
 
-  // 2. Load and persist states with LocalStorage
+  // Load and persist states with LocalStorage
   useEffect(() => {
     if (!selectedDay) return;
     
@@ -143,12 +143,15 @@ export default function App() {
       setChecklistStates({});
     }
 
-    // Load protein & calories
+    // Load protein, calories & water
     const savedProtein = localStorage.getItem(`${keyPrefix}protein`);
     setDailyProtein(savedProtein ? parseInt(savedProtein, 10) : 0);
 
     const savedCalories = localStorage.getItem(`${keyPrefix}calories`);
     setCaloriesLogged(savedCalories ? parseInt(savedCalories, 10) : 0);
+
+    const savedWater = localStorage.getItem(`${keyPrefix}water`);
+    setWaterLoggedOz(savedWater ? parseInt(savedWater, 10) : 0);
 
     // Load pushups
     const savedPushups = localStorage.getItem(`${keyPrefix}pushups`);
@@ -163,7 +166,20 @@ export default function App() {
     setTimerSeconds(savedTimer ? parseInt(savedTimer, 10) : 0);
   }, [selectedDay]);
 
-  // Save changes to localStorage on states update
+  // Load global metrics
+  useEffect(() => {
+    const storedWeight = localStorage.getItem('bhgs_global_weight');
+    if (storedWeight) {
+      setLoggedWeight(parseFloat(storedWeight));
+    }
+
+    const storedLongTermGoals = localStorage.getItem('bhgs_longterm_goals');
+    if (storedLongTermGoals) {
+      setCompletedLongTermGoals(JSON.parse(storedLongTermGoals));
+    }
+  }, []);
+
+  // Save checklist helper
   const saveStateToLocalStorage = (key, value) => {
     if (!selectedDay) return;
     localStorage.setItem(`bhgs_${selectedDay}_${key}`, JSON.stringify(value));
@@ -188,6 +204,14 @@ export default function App() {
     setCaloriesLogged(newCal);
     if (selectedDay) {
       localStorage.setItem(`bhgs_${selectedDay}_calories`, newCal);
+    }
+  };
+
+  const handleWaterAdd = (amountOz) => {
+    const newWater = Math.max(0, waterLoggedOz + amountOz);
+    setWaterLoggedOz(newWater);
+    if (selectedDay) {
+      localStorage.setItem(`bhgs_${selectedDay}_water`, newWater);
     }
   };
 
@@ -240,18 +264,16 @@ export default function App() {
     ].filter(Boolean).join(':');
   };
 
-  // Log weight globally (persists globally, not just per-day to track continuous drop)
-  useEffect(() => {
-    const storedWeight = localStorage.getItem('bhgs_global_weight');
-    if (storedWeight) {
-      setLoggedWeight(parseFloat(storedWeight));
-    }
-  }, []);
-
   const handleWeightChange = (newWeight) => {
     const rounded = parseFloat(newWeight).toFixed(1);
     setLoggedWeight(rounded);
     localStorage.setItem('bhgs_global_weight', rounded);
+  };
+
+  const toggleLongTermGoal = (goalText) => {
+    const updated = { ...completedLongTermGoals, [goalText]: !completedLongTermGoals[goalText] };
+    setCompletedLongTermGoals(updated);
+    localStorage.setItem('bhgs_longterm_goals', JSON.stringify(updated));
   };
 
   // Fast reset for the day's dashboard
@@ -260,6 +282,7 @@ export default function App() {
       setChecklistStates({});
       setDailyProtein(0);
       setCaloriesLogged(0);
+      setWaterLoggedOz(0);
       setPushupCount(0);
       setCustomFoodsLogged([]);
       setTimerSeconds(0);
@@ -270,6 +293,7 @@ export default function App() {
       localStorage.removeItem(`${prefix}checklist`);
       localStorage.removeItem(`${prefix}protein`);
       localStorage.removeItem(`${prefix}calories`);
+      localStorage.removeItem(`${prefix}water`);
       localStorage.removeItem(`${prefix}pushups`);
       localStorage.removeItem(`${prefix}foods`);
       localStorage.removeItem(`${prefix}timer`);
@@ -283,7 +307,7 @@ export default function App() {
     time_blocks: { daytime: ["Active Stretching & Recovery Walk"] }
   };
 
-  // Quick food options with calculated presets based on constitution
+  // Quick food options based directly on your Constitution
   const nutritionPresets = [
     { name: "Grilled Chicken Breast (150g)", protein: 40, calories: 220, category: "protein" },
     { name: "Sirloin Beef (150g)", protein: 35, calories: 290, category: "protein" },
@@ -355,7 +379,6 @@ export default function App() {
     handleCaloriesAdd(-cAmount);
   };
 
-  // Determine commute badge / info based on day's location
   const getCommuteDetails = () => {
     const loc = activeDaySchedule.location || "";
     if (loc.includes("The Edge SB")) {
@@ -374,6 +397,22 @@ export default function App() {
   };
 
   const commuteInfo = getCommuteDetails();
+
+  // Calculate daily completion score (habits + schedule checkboxes)
+  const calculateDailyCompletion = () => {
+    const dailyHabitsKeys = constitutionData.daily_non_negotiables.map((_, i) => `daily_habit_${i}`);
+    const timeBlocksKeys = Object.entries(activeDaySchedule.time_blocks).flatMap(([blockKey, tasks]) => 
+      tasks.map((_, idx) => `schedule_${blockKey}_${idx}`)
+    );
+    
+    const allKeys = [...dailyHabitsKeys, ...timeBlocksKeys];
+    if (allKeys.length === 0) return 100;
+
+    const completedCount = allKeys.filter(k => !!checklistStates[k]).length;
+    return Math.round((completedCount / allKeys.length) * 100);
+  };
+
+  const completionPct = calculateDailyCompletion();
 
   return (
     <div className="bg-[#0f1015] min-h-screen text-gray-200 font-sans pb-16">
@@ -481,10 +520,10 @@ export default function App() {
               </div>
 
               {/* Workout Checklist Target Meter */}
-              <div className="bg-gray-950/40 p-4 rounded-xl border border-gray-800/60 w-full md:w-auto text-center md:text-left">
-                <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Active Commute Location</div>
-                <div className="font-semibold text-white flex items-center justify-center md:justify-start gap-1">
-                  {selectedDay === "Sunday" ? "Burlington High School (BHS)" : activeDaySchedule.location}
+              <div className="bg-gray-950/40 p-4 rounded-xl border border-gray-800/60 w-full md:w-auto text-center md:text-left flex flex-col items-center">
+                <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Day Completion Score</div>
+                <div className="font-sporty font-black text-2xl text-neonGreen">
+                  {completionPct}%
                 </div>
               </div>
             </div>
@@ -904,6 +943,48 @@ export default function App() {
               </div>
             </div>
 
+            {/* HYDRATION HUD GAUGE (128 oz target) */}
+            <div className="bg-panelBg border border-gray-800 rounded-2xl p-6 relative overflow-hidden">
+              <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
+                <h3 className="font-sporty font-bold text-white uppercase text-xs tracking-widest flex items-center gap-1.5">
+                  <span className="text-neonCyan">💧</span> Daily Hydration Target
+                </h3>
+                <span className="text-[10px] text-neonCyan font-bold uppercase font-sporty">Goal: 1 Gallon</span>
+              </div>
+
+              <div className="flex items-center justify-between mb-4 bg-gray-950/40 p-3 rounded-xl border border-gray-800/60">
+                <div>
+                  <span className="text-[10px] text-gray-400 block uppercase font-semibold">Total Intake</span>
+                  <span className="font-sporty font-bold text-lg text-white">{waterLoggedOz} oz <span className="text-xs text-gray-500">/ 128 oz</span></span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] text-gray-400 block uppercase font-semibold">Progress</span>
+                  <span className="font-sporty font-bold text-lg text-neonCyan">{Math.min(100, Math.round((waterLoggedOz / 128) * 100))}%</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2 mb-4">
+                <button 
+                  onClick={() => handleWaterAdd(16)}
+                  className="py-2 bg-gray-900 border border-gray-800 rounded-lg hover:border-neonCyan hover:bg-gray-800 text-xs font-bold text-white transition-all active:scale-95"
+                >
+                  +16 oz (Glass)
+                </button>
+                <button 
+                  onClick={() => handleWaterAdd(32)}
+                  className="py-2 bg-gray-900 border border-gray-800 rounded-lg hover:border-neonCyan hover:bg-gray-800 text-xs font-bold text-white transition-all active:scale-95"
+                >
+                  +32 oz (Bottle)
+                </button>
+                <button 
+                  onClick={() => handleWaterAdd(-16)}
+                  className="py-2 bg-red-950/20 border border-red-900/40 rounded-lg hover:bg-red-900/20 text-xs text-red-400 transition-all active:scale-95"
+                >
+                  Subtract
+                </button>
+              </div>
+            </div>
+
             {/* SUB-PANEL: WEIGHT DROPPING COMPANION (170 lbs -> 160 lbs) */}
             <div className="bg-panelBg border border-gray-800 rounded-2xl p-6">
               <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
@@ -951,69 +1032,60 @@ export default function App() {
               </div>
             </div>
 
-            {/* SUB-PANEL: ATHLETIC GOAL HUD MONITOR */}
+            {/* SUB-PANEL: CONSTITUTION LONG TERM GOALS CHECKLIST */}
             <div className="bg-panelBg border border-gray-800 rounded-2xl p-6">
               <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
                 <h3 className="font-sporty font-bold text-white uppercase text-xs tracking-widest flex items-center gap-1.5">
-                  <span className="text-brand-500">🏀</span> Basketball Core Targets
+                  <span className="text-brand-500">🏆</span> Constitution Goal Milestones
                 </h3>
-                <span className="text-[10px] text-gray-400">CONSTITUTION PAGE 14</span>
+                <span className="text-[10px] text-gray-400">GLOBAL CHECKLIST</span>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <span className="text-xs font-semibold text-white block mb-1">
-                    🏀 Starting PG-Level Ballhandler
-                  </span>
-                  <p className="text-[11px] text-gray-400 leading-relaxed">
-                    Improve decision making, handles under heavy full-court pressure, and master signature pick-and-roll setups.
-                  </p>
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">Basketball Objectives</span>
+                  <div className="space-y-2">
+                    {constitutionData.goals.basketball.map((goal, i) => (
+                      <label 
+                        key={`lt_bask_${i}`}
+                        className="flex items-start gap-2.5 p-2 bg-gray-900/40 rounded-lg border border-gray-800/60 hover:border-brand-500/30 cursor-pointer select-none transition-all"
+                      >
+                        <input 
+                          type="checkbox"
+                          checked={!!completedLongTermGoals[goal]}
+                          onChange={() => toggleLongTermGoal(goal)}
+                          className="w-4 h-4 rounded border-gray-700 bg-gray-800 text-brand-500 focus:ring-0 mt-0.5"
+                        />
+                        <span className={`text-[11px] font-medium leading-relaxed ${completedLongTermGoals[goal] ? 'line-through text-gray-500' : 'text-gray-300'}`}>
+                          {goal}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
 
                 <div>
-                  <span className="text-xs font-semibold text-white block mb-1">
-                    🎯 Shoot 40% from 3 (Catch &amp; Dribble)
-                  </span>
-                  <p className="text-[11px] text-gray-400 leading-relaxed">
-                    Drill contested catch-and-shoot jumpers. Sunday game shooting charts tracking.
-                  </p>
-                </div>
-
-                <div className="bg-[#1f202a] p-3 rounded-lg border border-gray-800 text-xs">
-                  <span className="text-neonCyan font-sporty font-semibold uppercase text-[10px] tracking-wide block mb-1">
-                    📍 Edge Essex commutable workouts
-                  </span>
-                  <ul className="space-y-1 text-gray-400 text-[11px]">
-                    <li>• Shooting &amp; Skill Moves</li>
-                    <li>• Ball handling drills &amp; jumping plyo</li>
-                  </ul>
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">Structural Foundation</span>
+                  <div className="space-y-2">
+                    {constitutionData.goals.body.structural_foundation.map((goal, i) => (
+                      <label 
+                        key={`lt_body_${i}`}
+                        className="flex items-start gap-2.5 p-2 bg-gray-900/40 rounded-lg border border-gray-800/60 hover:border-brand-500/30 cursor-pointer select-none transition-all"
+                      >
+                        <input 
+                          type="checkbox"
+                          checked={!!completedLongTermGoals[goal]}
+                          onChange={() => toggleLongTermGoal(goal)}
+                          className="w-4 h-4 rounded border-gray-700 bg-gray-800 text-brand-500 focus:ring-0 mt-0.5"
+                        />
+                        <span className={`text-[11px] font-medium leading-relaxed ${completedLongTermGoals[goal] ? 'line-through text-gray-500' : 'text-gray-300'}`}>
+                          {goal}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* SUB-PANEL: STRUCTURAL PHYSICAL POSTURE RULES */}
-            <div className="bg-panelBg border border-gray-800 rounded-2xl p-6">
-              <div className="flex justify-between items-center mb-4 border-b border-gray-800 pb-3">
-                <h3 className="font-sporty font-bold text-white uppercase text-xs tracking-widest flex items-center gap-1.5">
-                  <span className="text-neonGreen">🧱</span> Foundation Posture Guard
-                </h3>
-                <span className="text-[10px] text-gray-400">STRUCTURAL BIOMECHANICS</span>
-              </div>
-
-              <ul className="space-y-2.5 text-xs text-gray-300">
-                <li className="flex items-start gap-2">
-                  <span className="text-neonGreen">✓</span>
-                  <span><strong>Ankle Bulletproofing</strong>: Achilles, feet, and calves development protocols.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-neonGreen">✓</span>
-                  <span><strong>Zero Hunch Back</strong>: Strict focus on thoracic mobility, facepulls, and trap activation.</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-neonGreen">✓</span>
-                  <span><strong>Toes &amp; Foot Foundation</strong>: Tibialis work, foot drills for optimal game day balance.</span>
-                </li>
-              </ul>
             </div>
 
             {/* RESET BUTTON MATRIX FOR INDIVIDUAL LOG DATA */}
