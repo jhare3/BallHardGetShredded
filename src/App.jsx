@@ -25,10 +25,50 @@ const constitutionData = {
     "Minimum of 10 minutes Kegel/core routine (The Coach App)"
   ],
   "dietary_options": {
-    "protein": ["Chicken", "Beef", "Shrimp", "Tofu", "Peanut Butter", "Mixed Nuts", "Protein Bars", "Protein Powder"],
-    "fiber": ["Watermelon", "Banana", "Sautéed spinach", "Sweet potatoes", "Nuts", "Yerba Prima Psyllium"],
-    "carbs": ["Sweet potato", "Rice", "Broccoli", "Spinach", "Frozen Fruit"],
-    "supplements_and_hydration": ["Magnesium", "Creatine", "B12", "Electrolytes (Body Armour)", "Water with Lemon & Sea salt"]
+    "protein": [
+      "Chicken", 
+      "Eggs", 
+      "Beef", 
+      "Shrimp", 
+      "Tofu", 
+      "Peanut Butter", 
+      "Chicken Sausage", 
+      "Mixed Nuts", 
+      "Protein Bars", 
+      "Protein Powder",
+      "Greek Yogurt (Plain/Low-Fat)*",
+      "Wild Salmon*"
+    ],
+    "fiber": [
+      "Watermelon", 
+      "Banana", 
+      "Sautéed spinach", 
+      "Sweet potatoes", 
+      "Nuts", 
+      "Frozen Fruit", 
+      "Yerba Prima Psyllium",
+      "Avocado*",
+      "Chia Seeds*"
+    ],
+    "carbs": [
+      "Sweet potato", 
+      "Hash brown", 
+      "GF pasta", 
+      "Rice", 
+      "Broccoli", 
+      "Spinach", 
+      "Frozen Fruit", 
+      "Corn tortilla",
+      "Quinoa*",
+      "Oatmeal*"
+    ],
+    "supplements_and_hydration": [
+      "Magnesium", 
+      "Creatine", 
+      "B12", 
+      "Electrolytes (Body Armour)", 
+      "Water with Lemon & Sea salt"
+    ]
   },
   "weekly_schedule": {
     "Monday": { "location": "The Edge SB (Weights)", "focus": "Upper Body Strength", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Full Upper Body Workout (Chest, Back, Shoulders, Biceps, Triceps, Traps)", "Dinner"] } },
@@ -45,18 +85,33 @@ const DAYS_OF_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "F
 const DAY_ABBREVS = { Sunday: "Sun", Monday: "Mon", Tuesday: "Tue", Wednesday: "Wed", Thursday: "Thu", Friday: "Fri", Saturday: "Sat" };
 
 const nutritionPresets = [
-  { name: "Grilled Chicken (150g)", protein: 40, calories: 220, category: "protein", emoji: "🍗" },
-  { name: "Sirloin Beef (150g)", protein: 35, calories: 290, category: "protein", emoji: "🥩" },
-  { name: "Garlic Shrimp", protein: 28, calories: 180, category: "protein", emoji: "🍤" },
-  { name: "Protein Shake", protein: 30, calories: 210, category: "protein", emoji: "🥛" },
-  { name: "Peanut Butter (2 tbsp)", protein: 8, calories: 190, category: "protein", emoji: "🥜" },
-  { name: "Sweet Potato (Baked)", protein: 2, calories: 160, category: "carbs", emoji: "🍠" },
-  { name: "Bowl of Rice", protein: 4, calories: 200, category: "carbs", emoji: "🍚" },
+  // Existing Presets
+  { name: "Grilled_Chicken (150g)", protein: 40, calories: 220, category: "protein", emoji: "🍗" },
+  { name: "Sirloin_Beef (150g)", protein: 35, calories: 290, category: "protein", emoji: "🥩" },
+  { name: "Shrimp", protein: 28, calories: 180, category: "protein", emoji: "🍤" },
+  { name: "Protein_Shake", protein: 30, calories: 250, category: "protein", emoji: "🥛" },
+  { name: "Peanut_Butter (2 tbsp)", protein: 8, calories: 190, category: "protein", emoji: "🥜" },
+  { name: "Sweet_Potato", protein: 2, calories: 160, category: "carbs", emoji: "🍠" },
+  { name: "Rice_Bowl", protein: 4, calories: 200, category: "carbs", emoji: "🍚" },
   { name: "Broccoli & Spinach", protein: 3, calories: 60, category: "fiber", emoji: "🥦" },
-  { name: "Watermelon Wedge", protein: 1, calories: 85, category: "fiber", emoji: "🍉" },
+  { name: "Watermelon", protein: 1, calories: 85, category: "fiber", emoji: "🍉" },
   { name: "Banana", protein: 1, calories: 105, category: "fiber", emoji: "🍌" },
   { name: "Psyllium Shake", protein: 0, calories: 30, category: "fiber", emoji: "🌾" },
-  { name: "Body Armour Electrolyte", protein: 0, calories: 90, category: "supplements", emoji: "⚡" },
+  { name: "Body_Armour Electrolyte", protein: 0, calories: 90, category: "supplements", emoji: "⚡" },
+
+  // New Additions from Fitness Constitution PDF
+  { name: "2_Eggs (2 whole)", protein: 12, calories: 140, category: "protein", emoji: "🥚" },
+  { name: "Chicken_Sausage (1 link)", protein: 13, calories: 110, category: "protein", emoji: "🌭" },
+  { name: "Hash_Brown (1 patty)", protein: 1, calories: 150, category: "carbs", emoji: "🥔" },
+  { name: "GF_Pasta (1 cup cooked)", protein: 4, calories: 210, category: "carbs", emoji: "🍝" },
+  { name: "Corn_Tortillas (2 small)", protein: 2, calories: 100, category: "carbs", emoji: "🫓" },
+  { name: "Frozen_Fruit (1 cup)", protein: 1, calories: 80, category: "fiber", emoji: "🍓" },
+
+  // Recommended Whole-Food Additions for Shredding/Performance
+  { name: "Greek_Yogurt (Plain, 1 cup)", protein: 22, calories: 130, category: "protein", emoji: "🥣" },
+  { name: "Salmon (150g cooked)", protein: 34, calories: 280, category: "protein", emoji: "🐟" },
+  { name: "Avocado (1/2 medium)", protein: 2, calories: 120, category: "fiber", emoji: "🥑" },
+  { name: "Oatmeal (1 cup cooked)", protein: 6, calories: 150, category: "carbs", emoji: "🥣" }
 ];
 
 const TABS = [

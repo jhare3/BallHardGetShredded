@@ -22,11 +22,51 @@
     "Minimum of 5 minutes meditation (Headspace)",
     "Minimum of 10 minutes Kegel/core routine (The Coach App)"
   ],
-  "dietary_options": {
-    "protein": ["Chicken", "Beef", "Shrimp", "Tofu", "Peanut Butter", "Mixed Nuts", "Protein Bars", "Protein Powder"],
-    "fiber": ["Watermelon", "Banana", "Sautéed spinach", "Sweet potatoes", "Nuts", "Yerba Prima Psyllium"],
-    "carbs": ["Sweet potato", "Rice", "Broccoli", "Spinach", "Frozen Fruit"],
-    "supplements_and_hydration": ["Magnesium", "Creatine", "B12", "Electrolytes (Body Armour)", "Water with Lemon & Sea salt"]
+"dietary_options": {
+    "protein": [
+      "Chicken", 
+      "Eggs", 
+      "Beef", 
+      "Shrimp", 
+      "Tofu", 
+      "Peanut Butter", 
+      "Chicken Sausage", 
+      "Mixed Nuts", 
+      "Protein Bars", 
+      "Protein Powder",
+      "Greek Yogurt (Plain/Low-Fat)*",
+      "Wild Salmon*"
+    ],
+    "fiber": [
+      "Watermelon", 
+      "Banana", 
+      "Sautéed spinach", 
+      "Sweet potatoes", 
+      "Nuts", 
+      "Frozen Fruit", 
+      "Yerba Prima Psyllium",
+      "Avocado*",
+      "Chia Seeds*"
+    ],
+    "carbs": [
+      "Sweet potato", 
+      "Hash brown", 
+      "GF pasta", 
+      "Rice", 
+      "Broccoli", 
+      "Spinach", 
+      "Frozen Fruit", 
+      "Corn tortilla",
+      "Quinoa*",
+      "Oatmeal*"
+    ],
+    "supplements_and_hydration": [
+      "Magnesium", 
+      "Creatine", 
+      "B12", 
+      "Electrolytes (Body Armour)", 
+      "Water with Lemon & Sea salt"
+    ]
   },
   "weekly_schedule": {
     "Monday": {
