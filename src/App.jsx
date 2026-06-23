@@ -1,85 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-
-const constitutionData = {
-  "goals": {
-    "body": {
-      "target_weight_lbs": 160,
-      "current_weight_lbs": 170,
-      "target_body_fat_pct": 15,
-      "aesthetic_and_posture": ["6-pack abs", "No hunch back", "Shredded upper body"],
-      "structural_foundation": [
-        "Bulletproof ankles, Achilles tendon, and calves",
-        "Strong foundation throughout toes, feet, legs, and core"
-      ]
-    },
-    "basketball": [
-      "Become a starting PG-level ballhandler",
-      "Shoot 40% from 3",
-      "Dynamic contested off the catch and dribble shooter"
-    ]
-  },
-  "daily_non_negotiables": [
-    "Minimum of 40 minutes of exercise",
-    "Minimum of 15 minutes outside (Get sunlight)",
-    "Minimum of 5 minutes meditation (Headspace)",
-    "Minimum of 10 minutes Kegel/core routine (The Coach App)"
-  ],
-  "dietary_options": {
-    "protein": [
-      "Chicken", 
-      "Eggs", 
-      "Beef", 
-      "Shrimp", 
-      "Tofu", 
-      "Peanut Butter", 
-      "Chicken Sausage", 
-      "Mixed Nuts", 
-      "Protein Bars", 
-      "Protein Powder",
-      "Greek Yogurt (Plain/Low-Fat)*",
-      "Wild Salmon*"
-    ],
-    "fiber": [
-      "Watermelon", 
-      "Banana", 
-      "Sautéed spinach", 
-      "Sweet potatoes", 
-      "Nuts", 
-      "Frozen Fruit", 
-      "Yerba Prima Psyllium",
-      "Avocado*",
-      "Chia Seeds*"
-    ],
-    "carbs": [
-      "Sweet potato", 
-      "Hash brown", 
-      "GF pasta", 
-      "Rice", 
-      "Broccoli", 
-      "Spinach", 
-      "Frozen Fruit", 
-      "Corn tortilla",
-      "Quinoa*",
-      "Oatmeal*"
-    ],
-    "supplements_and_hydration": [
-      "Magnesium", 
-      "Creatine", 
-      "B12", 
-      "Electrolytes (Body Armour)", 
-      "Water with Lemon & Sea salt"
-    ]
-  },
-  "weekly_schedule": {
-    "Monday": { "location": "The Edge SB (Weights)", "focus": "Upper Body Strength", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Full Upper Body Workout (Chest, Back, Shoulders, Biceps, Triceps, Traps)", "Dinner"] } },
-    "Tuesday": { "location": "The Edge Essex", "focus": "Basketball & Legs", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Basketball workout (Shooting, Ball handling, Skill moves, Jumping)", "Legs (Quads, Hamstrings, Calves, Tibialis, Feet)", "Dinner"] } },
-    "Wednesday": { "location": "Home Workout", "focus": "Home Maintenance", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Home workout (Body weight, Bands, Yoga, Plyometrics, Light strength)", "Dinner"] } },
-    "Thursday": { "location": "Home / Running Path", "focus": "Cardio Run", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Run (Cardio)", "Full Body Workout", "Dinner"] } },
-    "Friday": { "location": "The Edge SB", "focus": "Full Body Strength", "time_blocks": { "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"], "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"], "after_work_1730_2000": ["Full Body Workout", "Dinner"] } },
-    "Saturday": { "location": "The Edge Essex", "focus": "Game Prep & Shooting", "time_blocks": { "daytime": ["Full workout (Prep and maintenance for game day)", "Shooting workout at the Edge Essex (Shooting, Ball handling, Skill moves, Jumping)"] } },
-    "Sunday": { "location": "BHS (Burlington High School)", "focus": "Men's League Game", "time_blocks": { "game_time": ["Men's League Basketball Game"] } }
-  }
-};
+// Import your single source of truth directly
+import constitutionData from './data/constitution.json';
 
 const DAYS_OF_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const DAY_ABBREVS = { Sunday: "Sun", Monday: "Mon", Tuesday: "Tue", Wednesday: "Wed", Thursday: "Thu", Friday: "Fri", Saturday: "Sat" };
@@ -128,6 +49,7 @@ export default function App() {
   const [todayDayString, setTodayDayString] = useState("");
   const [checklistStates, setChecklistStates] = useState({});
   const [loggedWeight, setLoggedWeight] = useState(170);
+  const [targetWeight, setTargetWeight] = useState(160);
   const [dailyProtein, setDailyProtein] = useState(0);
   const [caloriesLogged, setCaloriesLogged] = useState(0);
   const [customProteinInput, setCustomProteinInput] = useState("");
@@ -165,6 +87,9 @@ export default function App() {
   useEffect(() => {
     const storedWeight = localStorage.getItem('bhgs_global_weight');
     if (storedWeight) setLoggedWeight(parseFloat(storedWeight));
+    
+    const storedTargetWeight = localStorage.getItem('bhgs_global_target_weight');
+    if (storedTargetWeight) setTargetWeight(parseFloat(storedTargetWeight));
   }, []);
 
   const save = (key, value) => {
@@ -231,6 +156,12 @@ export default function App() {
     const rounded = parseFloat(newWeight).toFixed(1);
     setLoggedWeight(rounded);
     localStorage.setItem('bhgs_global_weight', rounded);
+  };
+
+  const handleTargetWeightChange = (newWeight) => {
+    const rounded = parseFloat(newWeight).toFixed(1);
+    setTargetWeight(rounded);
+    localStorage.setItem('bhgs_global_target_weight', rounded);
   };
 
   const handleEatFoodPreset = (food) => {
@@ -555,20 +486,35 @@ export default function App() {
               </button>
             </div>
 
-            {/* Weight Slider */}
+            {/* Weight Trackers (Sliders) */}
             <div style={{ background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 2px 12px rgba(61,43,31,0.08)", border: "1px solid #e8ddd0" }}>
-              <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 14 }}>⚖️ Weight Tracker</div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                <span style={{ color: "#8B7355", fontSize: 12 }}>Target: 160 lbs</span>
-                <span style={{ color: "#2D4A22", fontWeight: 800, fontSize: 20 }}>{loggedWeight} lbs</span>
-                <span style={{ color: "#8B7355", fontSize: 12 }}>Base: 170 lbs</span>
+              <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 16 }}>⚖️ Weight Tracker</div>
+              
+              {/* Current Weight Slider */}
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                  <span style={{ color: "#8B7355", fontSize: 12, fontWeight: 600, textTransform: "uppercase" }}>Current Weight</span>
+                  <span style={{ color: "#2D4A22", fontWeight: 800, fontSize: 18 }}>{loggedWeight} lbs</span>
+                </div>
+                <input type="range" min="155" max="175" step="0.5" value={loggedWeight} onChange={e => handleWeightChange(e.target.value)}
+                  style={{ width: "100%", accentColor: "#2D4A22" }} />
               </div>
-              <input type="range" min="155" max="175" step="0.5" value={loggedWeight} onChange={e => handleWeightChange(e.target.value)}
-                style={{ width: "100%", accentColor: "#2D4A22" }} />
+
+              {/* Target Weight Slider */}
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                  <span style={{ color: "#8B7355", fontSize: 12, fontWeight: 600, textTransform: "uppercase" }}>Target Weight</span>
+                  <span style={{ color: "#E8C547", fontWeight: 800, fontSize: 18 }}>{targetWeight} lbs</span>
+                </div>
+                <input type="range" min="155" max="175" step="0.5" value={targetWeight} onChange={e => handleTargetWeightChange(e.target.value)}
+                  style={{ width: "100%", accentColor: "#E8C547" }} />
+              </div>
+
+              {/* Dynamic Metrics */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 14 }}>
                 <div style={{ background: "#F9F6F1", borderRadius: 10, padding: "10px 12px", border: "1px solid #ede4d8" }}>
                   <div style={{ color: "#8B7355", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em" }}>To Target</div>
-                  <div style={{ color: "#2D4A22", fontWeight: 800, fontSize: 18 }}>{(loggedWeight - 160).toFixed(1)} lbs</div>
+                  <div style={{ color: "#2D4A22", fontWeight: 800, fontSize: 18 }}>{(loggedWeight - targetWeight).toFixed(1)} lbs</div>
                 </div>
                 <div style={{ background: "#F9F6F1", borderRadius: 10, padding: "10px 12px", border: "1px solid #ede4d8" }}>
                   <div style={{ color: "#8B7355", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.08em" }}>Body Fat Goal</div>
@@ -639,8 +585,8 @@ export default function App() {
               <div style={{ color: "#3D2B1F", fontWeight: 700, fontSize: 13, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 14 }}>💪 Body Goals</div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 }}>
                 {[
-                  { label: "Target Weight", value: "160 lbs", color: "#2D4A22" },
-                  { label: "Body Fat", value: "15%", color: "#7A9E5E" },
+                  { label: "Target Weight", value: `${targetWeight} lbs`, color: "#2D4A22" },
+                  { label: "Current Weight", value: `${loggedWeight} lbs`, color: "#7A9E5E" },
                 ].map(item => (
                   <div key={item.label} style={{ background: "#F9F6F1", borderRadius: 10, padding: "12px", border: "1px solid #ede4d8", textAlign: "center" }}>
                     <div style={{ color: item.color, fontWeight: 800, fontSize: 22 }}>{item.value}</div>
