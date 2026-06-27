@@ -4,26 +4,33 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: '#f5f3ff',
-          100: '#ede9fe',
-          500: '#aa3bff',
-          600: '#9333ea',
-          700: '#7e22ce',
+        // Court-inspired dark mode palette
+        asphalt: {
+          900: '#0f1115',
+          800: '#171a21',
+          700: '#242936',
         },
-        neonGreen: '#22c55e',
-        neonCyan: '#06b6d4',
-        neonAmber: '#f59e0b',
-        panelBg: '#1a1b23',
-        darkBg: '#0f1015'
+        // The "Play Hard" energy
+        hoop: {
+          orange: '#ff5722',
+          glow: '#ff7043',
+        },
+        // The "Get Shredded" health vibe
+        shred: {
+          neon: '#ccff00', // Electric lime/yellow-green
+          green: '#10b981',
+        }
       },
       fontFamily: {
+        // Impactful athletic fonts
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        sporty: ['Orbitron', 'sans-serif'],
+      },
+      boxShadow: {
+        'neon-orange': '0 0 15px rgba(255, 87, 34, 0.35)',
+        'neon-shred': '0 0 15px rgba(204, 255, 0, 0.25)',
       }
     },
   },
