@@ -4,7 +4,11 @@
       "target_weight_lbs": 160,
       "current_weight_lbs": 170,
       "target_body_fat_pct": 15,
-      "aesthetic_and_posture": ["6-pack abs", "No hunch back", "Shredded upper body"],
+      "aesthetic_and_posture": [
+        "6-pack abs",
+        "No hunch back",
+        "Shredded upper body"
+      ],
       "structural_foundation": [
         "Bulletproof ankles, Achilles tendon, and calves",
         "Strong foundation throughout toes, feet, legs, and core"
@@ -16,117 +20,83 @@
       "Dynamic contested off the catch and dribble shooter"
     ]
   },
-  "daily_non_negotiables": [
-    "Minimum of 40 minutes of exercise",
-    "Minimum of 15 minutes outside (Get sunlight)",
-    "Minimum of 5 minutes meditation (Headspace)",
-    "Minimum of 10 minutes Kegel/core routine (The Coach App)"
-  ],
-"dietary_options": {
-    "protein": [
-      "Chicken", 
-      "Eggs", 
-      "Beef", 
-      "Shrimp", 
-      "Tofu", 
-      "Peanut Butter", 
-      "Chicken Sausage", 
-      "Mixed Nuts", 
-      "Protein Bars", 
-      "Protein Powder",
-      "Greek Yogurt (Plain/Low-Fat)*",
-      "Wild Salmon*"
+  "daily_needs": {
+    "habits": [
+      "Minimum of 40 minutes of exercise",
+      "Minimum of 15 minutes outside (Get sunlight)",
+      "Minimum of 5 minutes meditation (Headspace)",
+      "Minimum of 10 minutes Kegel/core routine (The Coach App)"
     ],
-    "fiber": [
-      "Watermelon", 
-      "Banana", 
-      "Sautéed spinach", 
-      "Sweet potatoes", 
-      "Nuts", 
-      "Frozen Fruit", 
-      "Yerba Prima Psyllium",
-      "Avocado*",
-      "Chia Seeds*"
-    ],
-    "carbs": [
-      "Sweet potato", 
-      "Hash brown", 
-      "GF pasta", 
-      "Rice", 
-      "Broccoli", 
-      "Spinach", 
-      "Frozen Fruit", 
-      "Corn tortilla",
-      "Quinoa*",
-      "Oatmeal*"
-    ],
-    "supplements_and_hydration": [
-      "Magnesium", 
-      "Creatine", 
-      "B12", 
-      "Electrolytes (Body Armour)", 
-      "Water with Lemon & Sea salt"
+    "tracking": [
+      "Daily Calories",
+      "Daily Protein",
+      "Daily Creatine",
+      "Daily Vitamins",
+      "Daily Electrolytes"
     ]
   },
-  "weekly_schedule": {
-    "Monday": {
-      "location": "The Edge SB (Weights)",
-      "focus": "Upper Body Strength",
-      "time_blocks": {
-        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
-        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
-        "after_work_1730_2000": ["Full Upper Body Workout (Chest, Back, Shoulders, Biceps, Triceps, Traps)", "Dinner"]
-      }
+  "weekly_needs": {
+    "training_distribution": [
+      "3 days/week for each muscle group",
+      "3 days/week of cardio",
+      "3 days/week of Basketball"
+    ],
+    "diet": "Balanced weekly Diet"
+  },
+  "availability": {
+    "weekdays": {
+      "morning_0600_0730": [
+        "Dynamic stretching/chi gong",
+        "Short workout",
+        "Breakfast & Coffee",
+        "Get sunlight"
+      ],
+      "work_hours_0730_1730": [
+        "Stretch and maintenance exercises",
+        "Pushups/Core between meetings",
+        "Eat snacks",
+        "Lunch 12:00-12:30"
+      ],
+      "after_work_1730_2000": [
+        "Full workout",
+        "Dinner"
+      ]
     },
-    "Tuesday": {
-      "location": "The Edge Essex",
-      "focus": "Basketball Workout & Legs",
-      "time_blocks": {
-        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
-        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
-        "after_work_1730_2000": ["Basketball workout (Shooting, Ball handling, Skill moves, Jumping)", "Legs (Quads, Hamstrings, Calves, Tibialis, Feet)", "Dinner"]
-      }
+    "saturday": {
+      "game_prep": [
+        "Full workout (prep and maintenance for game day)"
+      ]
     },
-    "Wednesday": {
-      "location": "Home Workout",
-      "focus": "Home Maintenance & Light Strength",
-      "time_blocks": {
-        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
-        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
-        "after_work_1730_2000": ["Home workout (Body weight, Bands, Yoga, Plyometrics, Light strength)", "Dinner"]
-      }
-    },
-    "Thursday": {
-      "location": "Home / Running Path",
-      "focus": "Cardio Run & Full Body Workout",
-      "time_blocks": {
-        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
-        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
-        "after_work_1730_2000": ["Run (Cardio)", "Full Body Workout", "Dinner"]
-      }
-    },
-    "Friday": {
-      "location": "The Edge SB",
-      "focus": "Full Body Workout",
-      "time_blocks": {
-        "morning_600_730": ["Dynamic stretching/Chi Gong", "Short workout", "Breakfast & Coffee", "Get sunlight"],
-        "work_hours_730_1730": ["Pushups/Core between meetings", "Eat snacks", "Lunch 12:00-12:30"],
-        "after_work_1730_2000": ["Full Body Workout", "Dinner"]
-      }
-    },
-    "Saturday": {
-      "location": "The Edge Essex",
-      "focus": "Game Prep & Shooting Workout",
-      "time_blocks": {
-        "daytime": ["Full workout (Prep and maintenance for game day)", "Shooting workout at the Edge Essex (Shooting, Ball handling, Skill moves, Jumping)"]
-      }
-    },
-    "Sunday": {
-      "location": "BHS (Burlington High School)",
-      "focus": "Men's League Game Day",
-      "time_blocks": {
-        "game_time": ["Men's League Basketball Game"]
-      }
+    "sunday": {
+      "game_day": [
+        "Men's league basketball game day"
+      ]
     }
+  },
+  "resources_and_gear": {
+    "facilities": [
+      {
+        "name": "The Edge Gym Burlington",
+        "commute": "7-minute",
+        "features": ["Weights", "Cardio equipment"]
+      },
+      {
+        "name": "The Edge Gym Essex",
+        "commute": "20-minute",
+        "features": ["Weights", "Cardio equipment", "Basketball"]
+      },
+      {
+        "name": "Burlington High School (BHS)",
+        "features": ["Sunday Basketball", "Men's League"]
+      }
+    ],
+    "home_workout": [
+      "Running path",
+      "Plyometrics",
+      "Light-weight strength training",
+      "Body weight",
+      "Bands",
+      "Yoga"
+    ]
   }
 }

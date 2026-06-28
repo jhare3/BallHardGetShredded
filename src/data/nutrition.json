@@ -1,24 +1,61 @@
-[
-  { "name": "Grilled_Chicken (150g)", "protein": 40, "calories": 220, "category": "protein", "emoji": "🍗" },
-  { "name": "Sirloin_Beef (150g)", "protein": 35, "calories": 290, "category": "protein", "emoji": "🥩" },
-  { "name": "Shrimp", "protein": 28, "calories": 180, "category": "protein", "emoji": "🍤" },
-  { "name": "Protein_Shake", "protein": 30, "calories": 250, "category": "protein", "emoji": "🥛" },
-  { "name": "Peanut_Butter (2 tbsp)", "protein": 8, "calories": 190, "category": "protein", "emoji": "🥜" },
-  { "name": "Sweet_Potato", "protein": 2, "calories": 160, "category": "carbs", "emoji": "🍠" },
-  { "name": "Rice_Bowl", "protein": 4, "calories": 200, "category": "carbs", "emoji": "🍚" },
-  { "name": "Broccoli & Spinach", "protein": 3, "calories": 60, "category": "fiber", "emoji": "🥦" },
-  { "name": "Watermelon", "protein": 1, "calories": 85, "category": "fiber", "emoji": "🍉" },
-  { "name": "Banana", "protein": 1, "calories": 105, "category": "fiber", "emoji": "🍌" },
-  { "name": "Psyllium Shake", "protein": 0, "calories": 30, "category": "fiber", "emoji": "🌾" },
-  { "name": "Body_Armour Electrolyte", "protein": 0, "calories": 90, "category": "supplements", "emoji": "⚡" },
-  { "name": "2_Eggs (2 whole)", "protein": 12, "calories": 140, "category": "protein", "emoji": "🥚" },
-  { "name": "Chicken_Sausage (1 link)", "protein": 13, "calories": 110, "category": "protein", "emoji": "🌭" },
-  { "name": "Hash_Brown (1 patty)", "protein": 1, "calories": 150, "category": "carbs", "emoji": "🥔" },
-  { "name": "GF_Pasta (1 cup cooked)", "protein": 4, "calories": 210, "category": "carbs", "emoji": "🍝" },
-  { "name": "Corn_Tortillas (2 small)", "protein": 2, "calories": 100, "category": "carbs", "emoji": "🫓" },
-  { "name": "Frozen_Fruit (1 cup)", "protein": 1, "calories": 80, "category": "fiber", "emoji": "🍓" },
-  { "name": "Greek_Yogurt (Plain, 1 cup)", "protein": 22, "calories": 130, "category": "protein", "emoji": "🥣" },
-  { "name": "Salmon (150g cooked)", "protein": 34, "calories": 280, "category": "protein", "emoji": "🐟" },
-  { "name": "Avocado (1/2 medium)", "protein": 2, "calories": 120, "category": "fiber", "emoji": "🥑" },
-  { "name": "Oatmeal (1 cup cooked)", "protein": 6, "calories": 150, "category": "carbs", "emoji": "🥣" }
-]
+{
+  "categories": {
+    "protein": [
+      "Chicken",
+      "Eggs",
+      "Beef",
+      "Shrimp",
+      "Tofu",
+      "Peanut Butter",
+      "Chicken Sausage",
+      "Mixed Nuts",
+      "Protein Bars",
+      "Protein Powder"
+    ],
+    "fiber": [
+      "Water Melon",
+      "Banana",
+      "Sautéed spinach",
+      "Sweet potatoes",
+      "Nuts",
+      "Frozen Fruit",
+      "Yerba Prima Psyllium"
+    ],
+    "carbs": [
+      "Sweet potato",
+      "Hash brown",
+      "GF pasta",
+      "Rice",
+      "Broccoli",
+      "Spinach",
+      "Frozen Fruit",
+      "Corn tortilla"
+    ],
+    "electrolytes": [
+      "Banana",
+      "Sautéed spinach",
+      "Sweet potatoes",
+      "Water Melon",
+      "Frozen Fruit",
+      "Body Armour",
+      "Water with Lemon & Sea salt"
+    ],
+    "supplements": [
+      "Magnesium",
+      "Creatine",
+      "B12"
+    ],
+    "takeout_and_other": [
+      "Pad thai",
+      "Pad sea ew",
+      "Chicken tikka masala",
+      "Pepperoni pizza",
+      "Burger",
+      "Chicken sandwich",
+      "Korean rice bowl",
+      "Extra sauce",
+      "Ice Cream",
+      "Cookies"
+    ]
+  }
+}

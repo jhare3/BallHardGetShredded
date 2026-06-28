@@ -1,57 +1,78 @@
-[
-  { "name": "Chest - DB Incline Bench", "category": "strength", "emoji": "🏋️‍♂️", "caloriesBurned": 250, "details": "Upper chest focus using dumbbells on an incline bench." },
-  { "name": "Chest - Flys", "category": "strength", "emoji": "🦋", "caloriesBurned": 180, "details": "Isolation movement targeting outer and inner chest pectorals." },
-  
-  { "name": "Back - Dumbbell Row", "category": "strength", "emoji": "💪", "caloriesBurned": 260, "details": "Unilateral movement building lat and mid-back thickness." },
-  { "name": "Back - Row Machine", "category": "strength", "emoji": "🤖", "caloriesBurned": 240, "details": "Controlled cable or plate-loaded row variations for mid-back." },
-  
-  { "name": "Shoulders - DB Shoulder Press", "category": "strength", "emoji": "🪨", "caloriesBurned": 220, "details": "Dumbbell overhead press for anterior and medial deltoid drive." },
-  { "name": "Shoulders - Side Arm Raises", "category": "strength", "emoji": "🛡️", "caloriesBurned": 140, "details": "Lateral dumbbell raises isolating side delts for width." },
-  
-  { "name": "Biceps - Curls", "category": "strength", "emoji": "💪", "caloriesBurned": 130, "details": "Standard dumbbell, barbell, or cable curls targeting biceps brachii." },
-  { "name": "Biceps - Plate Curls", "category": "strength", "emoji": "🍽️", "caloriesBurned": 140, "details": "Bicep pinch curls using weight plates to test and build grip strength." },
-  
-  { "name": "Triceps - Kick Backs", "category": "strength", "emoji": "⚡", "caloriesBurned": 120, "details": "Dumbbell kickbacks targeting the lateral head and contraction." },
-  { "name": "Triceps - Dips", "category": "strength", "emoji": "🪜", "caloriesBurned": 200, "details": "Bodyweight or weighted bar/bench dips for lower chest and triceps." },
-  { "name": "Triceps - Pull Overs", "category": "strength", "emoji": "📐", "caloriesBurned": 180, "details": "Dumbbell pullovers focusing on long head tricep stretch and lats." },
-  
-  { "name": "Traps - Shrugs", "category": "strength", "emoji": "🐂", "caloriesBurned": 150, "details": "Heavy dumbbell or barbell shrugs to build upper trap density." },
-  
-  { "name": "Quads - Barbell Squats", "category": "strength", "emoji": "🏋️‍♂️", "caloriesBurned": 350, "details": "Heavy back or front barbell squats driving leg growth." },
-  { "name": "Quads - Dumbbell Squats", "category": "strength", "emoji": "🦵", "caloriesBurned": 260, "details": "Goblet or suitcase dumbbell squats building unilateral stabilization." },
-  { "name": "Quads - Kettlebell Deep Squat", "category": "strength", "emoji": "🏺", "caloriesBurned": 280, "details": "Deep mobile kettlebell squats focusing on full depth and hip opening." },
-  { "name": "Quads - Wall Sits", "category": "strength", "emoji": "🧱", "caloriesBurned": 100, "details": "Isometric quad endurance hold testing mental grit." },
-  { "name": "Quads - Isometric Lunge", "category": "strength", "emoji": "🧎‍♂️", "caloriesBurned": 120, "details": "Static lunge holds for patellar tendon compliance and structural stability." },
-  
-  { "name": "Hamstrings - RDL", "category": "strength", "emoji": "🐎", "caloriesBurned": 300, "details": "Barbell Romanian Deadlifts loading the hips and posterior chain." },
-  { "name": "Hamstrings - Kettlebell RDL", "category": "strength", "emoji": "🏺", "caloriesBurned": 240, "details": "Kettlebell Romanian Deadlifts emphasizing hip hinge control." },
-  { "name": "Hamstrings - Deadlift", "category": "strength", "emoji": "💀", "caloriesBurned": 400, "details": "Conventional or sumo barbell deadlift for absolute total body power." },
-  { "name": "Hamstrings - Glute Bridge", "category": "strength", "emoji": "🌉", "caloriesBurned": 160, "details": "Floor or bench glute hip thrusts/bridges for posterior driving power." },
-  
-  { "name": "Calves - Calf Raises", "category": "strength", "emoji": "🧍‍♂️", "caloriesBurned": 110, "details": "Standing calf raises building the gastrocnemius." },
-  { "name": "Calves - Calf Machine", "category": "strength", "emoji": "🦿", "caloriesBurned": 120, "details": "Seated or leg-press calf machine sets focusing on deep stretch." },
-  { "name": "Calves - Isometric Holds", "category": "strength", "emoji": "⏱️", "caloriesBurned": 90, "details": "Timed single-leg or double-leg calf elevation holds for tendon health." },
-  
-  { "name": "Tibialis - Tibialis Wall Raises", "category": "strength", "emoji": "🧱", "caloriesBurned": 90, "details": "Bodyweight deceleration wall raises supporting ankle deceleration mechanics." },
-  { "name": "Tibialis - KB Toe Raises", "category": "strength", "emoji": "🏺", "caloriesBurned": 110, "details": "Ankle-loaded kettlebell flexion to fortify shin resilience." },
-  
-  { "name": "Feet - Toe Bands", "category": "strength", "emoji": "🩲", "caloriesBurned": 60, "details": "Resistance band splay movements targeting intrinsic foot muscles." },
-  { "name": "Feet - Yoga Block Balance", "category": "strength", "emoji": "🧘‍♂️", "caloriesBurned": 70, "details": "Barefoot dynamic stability balance sequences on a soft platform." },
-  { "name": "Feet - Balance Ball", "category": "strength", "emoji": "🔮", "caloriesBurned": 80, "details": "Stabilizing on a balance pod or bosu ball to fire up ankle stabilizers." },
-  { "name": "Feet - Sidekick Board", "category": "strength", "emoji": "🛹", "caloriesBurned": 90, "details": "Slant or tipping board ankle tilt adaptations." },
-  
-  { "name": "Core - Crunch Routine", "category": "strength", "emoji": "🧱", "caloriesBurned": 110, "details": "Direct upper and lower abdominal activation series." },
-  { "name": "Core - Kegel/Core App Routine", "category": "strength", "emoji": "📱", "caloriesBurned": 90, "details": "The Coach App tactical structural sequence prioritizing pelvic floor alignment." },
-  
-  { "name": "Cardio - Bike", "category": "cardio_recovery", "emoji": "🚲", "caloriesBurned": 380, "details": "Stationary or open road cycling session for low-impact cardio." },
-  { "name": "Cardio - Run", "category": "cardio_recovery", "emoji": "🏃‍♂️", "caloriesBurned": 450, "details": "Steady-state aerobic base or speed run sequence." },
-  { "name": "Cardio - Stair Master", "category": "cardio_recovery", "emoji": "🪜", "caloriesBurned": 420, "details": "Vertical climbing session driving active quad burn and lung capacity." },
-  { "name": "Cardio - Elliptical", "category": "cardio_recovery", "emoji": "🌀", "caloriesBurned": 320, "details": "Low-impact fluid pacing supporting joint conditioning." },
-  { "name": "Cardio - Jump Rope", "category": "cardio_recovery", "emoji": "🪢", "caloriesBurned": 400, "details": "High-velocity skips building coordination and elastic ankle snap." },
-  
-  { "name": "Basketball - Open Runs", "category": "basketball", "emoji": "🏀", "caloriesBurned": 550, "details": "Full court scrimmage, active continuous play, or pickup games." },
-  { "name": "Basketball - Shooting", "category": "basketball", "emoji": "🎯", "caloriesBurned": 300, "details": "Spot-ups, off-the-dribble, and free throw mechanics repetitions." },
-  { "name": "Basketball - Ball Handling", "category": "basketball", "emoji": "👟", "caloriesBurned": 350, "details": "Stationary combinations, shift work, and heavy ball control series." },
-  { "name": "Basketball - Skill Moves", "category": "basketball", "emoji": "⚡", "caloriesBurned": 420, "details": "Game-speed combo footwork, finishes at the rim, and step-backs." },
-  { "name": "Basketball - Jumping", "category": "basketball", "emoji": "🚀", "caloriesBurned": 380, "details": "Plyometric drop jumps, vertical approach bounds, and rim-touches." }
-]
+{
+  "categories": {
+    "upper_body": {
+      "chest": [
+        "Dumbbell inclined bench",
+        "Flys"
+      ],
+      "back": [
+        "Dumbbell row",
+        "Row machine"
+      ],
+      "shoulders": [
+        "Dumbbell shoulder press",
+        "Side arm raises"
+      ],
+      "biceps": [
+        "Curls",
+        "Plate curls"
+      ],
+      "triceps": [
+        "Kick backs",
+        "Dips",
+        "Pull overs"
+      ],
+      "traps": [
+        "Shrugs"
+      ]
+    },
+    "lower_body": {
+      "quads": [
+        "Barbell squats",
+        "Dumbbell squats",
+        "Kettlebell Deep Squat",
+        "Wall sits",
+        "Isometric lunge"
+      ],
+      "hamstrings": [
+        "RDL",
+        "Kettlebell RDL",
+        "Deadlift",
+        "Glute Bridge"
+      ],
+      "calfs": [
+        "Calf raises",
+        "Calf machine",
+        "Isometric holds"
+      ],
+      "tibialus": [
+        "Tibialus Wall raises",
+        "Kettlebell Toe raises"
+      ],
+      "feet": [
+        "Toe bands",
+        "Yoga block balance",
+        "Balance ball",
+        "Sidekick board"
+      ]
+    },
+    "core_and_pelvic_floor": [
+      "Crunch routine",
+      "Kegel/core routine (The Coach App)"
+    ],
+    "cardio": [
+      "Bike",
+      "Run",
+      "Stair master",
+      "Elliptical",
+      "Jump rope",
+      "Basketball"
+    ],
+    "basketball": [
+      "Shooting",
+      "Ball handling",
+      "Skill moves",
+      "Jumping"
+    ]
+  }
+}
